@@ -1,0 +1,76 @@
+using UnityEngine;
+
+namespace Common
+{
+    /// <summary> /// 数据保存，使用多线程读取数据写入文件中 /// </summary>
+    public class DataSave
+    {
+        private static DataSave instance;
+        private const string completeTaskName = "CompleteTask";
+        private const string runtimeTaskName = "RuntimeTask";
+        private const string obtainPackagesName = "ObtainPackages";
+
+        public static DataSave Instance
+        {
+            get
+            {
+                if(instance == null)
+                {
+                    instance = new DataSave();
+                }
+                return instance;
+            }
+        }
+
+        private bool isSaveComplete;
+        private DataSave()
+        {
+        }
+
+        /// <summary> /// 保存数据的呼叫接口 /// </summary>
+        public void SaveData()
+        {
+            isSaveComplete = false;
+            AsyncLoad.Instance.AddAction(AsynSaveData);
+        }
+
+        //多线程保存数据
+        private void AsynSaveData()
+        {
+            if (DataLoad.LoadAsset == null)
+                return;
+            SaveTaskData();
+
+            isSaveComplete=true;
+        }
+
+        private void SaveTaskData()
+        {
+            string runtimeTask = Task.AsynTaskControl.Instance.GetRuntimeTaskData();
+            string completeTask = Task.AsynTaskControl.Instance.GetCompleteTaskData();
+            FileLoadAsset loadAsset = DataLoad.LoadAsset;
+            string prefit = Application.streamingAssetsPath;
+            FileReadAndWrite.WriteFile(prefit + loadAsset.FindPath(runtimeTaskName),
+                runtimeTask);
+            FileReadAndWrite.WriteFile(prefit + loadAsset.FindPath(completeTaskName),
+                completeTask);
+            Debug.Log("保存完毕");
+        }
+
+        public static void ClearData()
+        {
+            FileLoadAsset loadAsset = Resources.Load<FileLoadAsset>("Common/FileLoadAsset");
+            string prefit = Application.streamingAssetsPath;
+            //清理任务数据
+            FileReadAndWrite.WriteFile(prefit + 
+                loadAsset.FindPath(runtimeTaskName), "");
+            FileReadAndWrite.WriteFile(prefit + 
+                loadAsset.FindPath(completeTaskName), "");
+
+            FileReadAndWrite.WriteFile(prefit +
+                loadAsset.FindPath(obtainPackagesName), "");
+        }
+
+
+    }
+}
