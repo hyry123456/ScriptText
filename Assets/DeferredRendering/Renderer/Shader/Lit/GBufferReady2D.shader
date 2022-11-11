@@ -27,6 +27,8 @@ Shader "Defferer/GBufferReady2D"
 		_DetailSmoothness("Detail Smoothness", Range(0, 1)) = 1
 		_DetailNormalScale("Detail Normal Scale", Range(0, 1)) = 1
 
+		[Toggle(_IS_FONT)] _FontText("Is Font", Range(0, 1)) = 0
+		[Enum(Off, 0, On, 1)] _ZWrite("Z Write", Float) = 1
     }
     SubShader
     {
@@ -40,7 +42,7 @@ Shader "Defferer/GBufferReady2D"
                 "LightMode" = "OutGBuffer"
             }
 			Cull Off
-			ZWrite On
+			ZWrite [_ZWrite]
 
             HLSLPROGRAM
             #pragma vertex LitPassVertex
@@ -51,6 +53,7 @@ Shader "Defferer/GBufferReady2D"
 			#pragma shader_feature _MASK_MAP
 			#pragma shader_feature _NORMAL_MAP
 			#pragma shader_feature _DETAIL_MAP
+			#pragma shader_feature _IS_FONT
 			#pragma multi_compile _ LIGHTMAP_ON
 			
 			#pragma multi_compile_instancing

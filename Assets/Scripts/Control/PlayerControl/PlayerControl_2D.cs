@@ -30,7 +30,7 @@ namespace Control
         //3D控制移动，直接用摄像机的前方即可
         public override Vector3 GetLookatDir()
         {
-            return transform.right * 0.1f;
+            return transform.right;
         }
     }
 }

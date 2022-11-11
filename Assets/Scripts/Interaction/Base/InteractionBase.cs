@@ -27,7 +27,7 @@ namespace Interaction
         protected abstract void OnEnable();
 
         /// <summary>        /// 该交互行为需要干的事情        /// </summary>
-        public abstract void InteractionBehavior();
+        public abstract void InteractionBehavior(Common.INonReturnAndNonParam recall);
 
     }
 }

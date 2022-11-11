@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
 
 namespace UI
@@ -8,10 +8,10 @@ namespace UI
         private static SmallDialog instance;
         public static SmallDialog Instance => instance;
 
-        /// <summary>        /// Ã¿Ò»¸öÎÄ×ÖÉú³ÉµÄµÈ´ıÊ±¼ä        /// </summary>
+        /// <summary>        /// æ¯ä¸€ä¸ªæ–‡å­—ç”Ÿæˆçš„ç­‰å¾…æ—¶é—´        /// </summary>
         public float perFontWaitTime = 0.08f;
         private float nowWaitTime = 0;
-        /// <summary>        /// Ğ¡¶Ô»°ÏÔÊ¾ÓÃµÄÎÄ±¾×é¼ş        /// </summary>
+        /// <summary>        /// å°å¯¹è¯æ˜¾ç¤ºç”¨çš„æ–‡æœ¬ç»„ä»¶        /// </summary>
         Text smallDialog;
 
         private void Awake()

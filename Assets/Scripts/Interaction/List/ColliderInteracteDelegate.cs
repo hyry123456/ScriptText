@@ -54,8 +54,9 @@ namespace Interaction
             }
         }
 
-        public override void InteractionBehavior()
+        public override void InteractionBehavior(Common.INonReturnAndNonParam recall)
         {
+            recall();
         }
 
         /// <summary>/// 当触发发生时执行的方法，用来执行交互，当触发结束后立刻结束该交互/// </summary>

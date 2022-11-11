@@ -74,14 +74,19 @@ void LitPassFragment (Varyings2D input,
 		config.detailUV = input.detailUV;
 		config.useDetail = true;
 	#endif
-	
-	//纹理颜色
 	float4 base = GetBase(config) * input.color;
-	float3 positionWS = input.positionWS;
 
 	#if defined(_CLIPPING)
 		clip(base.a - GetCutoff(config));
 	#endif
+
+	#if defined(_IS_FONT)
+		base.xyz = input.color;
+	#endif
+
+	float3 positionWS = input.positionWS;
+
+
 	
 	float3 normal = _2D_Normal;    //默认向前
 	float3 perNormal = float3(input.TtoW0.z, input.TtoW1.z, input.TtoW2.z);

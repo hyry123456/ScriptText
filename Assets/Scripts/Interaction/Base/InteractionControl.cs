@@ -36,6 +36,15 @@ namespace Interaction
         public InteractionBase nowInteractionInfo;
         /// <summary>        /// 射线检测的距离        /// </summary>
         public float interacteCheckDistance = 3f;
+        [SerializeField]
+        GameObject interacteRemain;
+
+        private bool isInteracting = false;
+        //public bool IsInteracting
+        //{
+        //    get { return isInteracting; }
+        //    set { isInteracting = value; }
+        //}
 
         private InteractionControl() { }
 
@@ -53,9 +62,9 @@ namespace Interaction
         {
             RaycastHit hit;
 #if UNITY_EDITOR
-            Debug.DrawRay(PlayerControl.transform.position, PlayerControl.GetLookatDir() * 3);
+            Debug.DrawRay(PlayerControl.transform.position, PlayerControl.GetLookatDir() * interacteCheckDistance);
 #endif
-            if (Physics.Raycast(playerControl.transform.position, playerControl.GetLookatDir() * 3, out hit, interacteCheckDistance))
+            if (Physics.Raycast(playerControl.transform.position, playerControl.GetLookatDir(), out hit, interacteCheckDistance))
             {
                 InteractionBase hitInfo = hit.transform.GetComponent<InteractionBase>();
                 if (hitInfo != null && !hit.collider.isTrigger)
@@ -67,22 +76,38 @@ namespace Interaction
             }
             else
                 nowInteractionInfo = null;
-            //if(nowInteractionInfo == null)
-            //    UI.InteractionUI.Instance.CloseInteracte();
-            //else
-            //    UI.InteractionUI.Instance.ShowInteracte();
+            if(interacteRemain != null)
+            {
+                if(nowInteractionInfo == null || isInteracting)
+                    interacteRemain.SetActive(false);
+                else
+                {
+                    interacteRemain.SetActive(true);
+                    interacteRemain.transform.position = nowInteractionInfo.
+                        transform.position + Vector3.up * 0.5f;
+                }
+            }
         }
 
         /// <summary>        /// 运行交互事件        /// </summary>
         /// <param name="interactionInfo">发生的交互事件</param>
-        public void RunInteraction(InteractionBase interactionInfo)
+        private void RunInteraction(InteractionBase interactionInfo)
         {
             Debug.Log("运行");
             if (interactionInfo == null) { 
                 Debug.Log("交互对象空了");
             }
             //运行交互行为
-            interactionInfo.InteractionBehavior();
+            if (!isInteracting)
+            {
+                isInteracting = true;
+                interactionInfo.InteractionBehavior(ReCall);
+            }
+        }
+
+        private void ReCall()
+        {
+            isInteracting = false;
         }
 
         /// <summary>

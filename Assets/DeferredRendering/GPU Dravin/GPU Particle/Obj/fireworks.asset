@@ -28,7 +28,7 @@ MonoBehaviour:
   groupCubeRange: {x: 1, y: 1, z: 1}
   particleCubeRange: {x: 1, y: 1, z: 1}
   groupVelocityBegin: {x: 0, y: 5, z: 0}
-  particleVelocityBegin: 200
+  particleVelocityBegin: 10
   octave: 8
   frequency: 100
   groupIntensity: 10
@@ -141,4 +141,4 @@ MonoBehaviour:
     m_RotationOrder: 4
   groupTime: 1
   particleTime: 2
-  groupReleaseTime: 1
+  groupReleaseTime: 0.3

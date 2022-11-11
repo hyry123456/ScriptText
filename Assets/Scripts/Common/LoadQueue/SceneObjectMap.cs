@@ -63,10 +63,12 @@ namespace Common
         {
             GameObject obj = null;
            
-            if(objectMap == null) Debug.Log(name);
-            if (!objectMap.TryGetValue(name, out obj)) {
+            if(objectMap == null) return null;
+            if (objectMap.TryGetValue(name, out obj)) 
+            {
+                return obj;
             }
-            return obj;
+            return null;
         }
 
         public void ReleaseObject()

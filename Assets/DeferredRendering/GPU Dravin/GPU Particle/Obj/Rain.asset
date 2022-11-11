@@ -23,9 +23,10 @@ MonoBehaviour:
   velocityBegin: {x: 1, y: -10, z: 1}
   releaseTime: 1
   liveTime: 5
+  collsionScale: 1
   octave: 1
   frequency: 1
-  intensity: 5
+  intensity: 1
   useGravity: 0
   gradient:
     serializedVersion: 2
