@@ -27,8 +27,8 @@ namespace UI
         /// <summary>        /// 拖拽事件        /// </summary>
         public Drag drag;
         /// <summary>       
-        /// /// 拖拽事件调用，请不要随便调用该函数，事件添加在drag中添加即可   
-        /// /// </summary>
+        /// 拖拽事件调用，请不要随便调用该函数，事件添加在drag中添加即可   
+        /// </summary>
         public void OnDrag(PointerEventData eventData)
         {
             if (drag != null)
@@ -39,8 +39,8 @@ namespace UI
         /// <summary>        /// 鼠标按下事件，在鼠标按下时进行        /// </summary>
         public PointerDown pointerDown;
         /// <summary>        
-        /// /// 鼠标按下事件调用，请在pointerDown中添加事件        
-        /// /// </summary>
+        /// 鼠标按下事件调用，请在pointerDown中添加事件        
+        /// </summary>
         public void OnPointerDown(PointerEventData eventData)
         {
             if (pointerDown != null)
@@ -63,8 +63,8 @@ namespace UI
         /// <summary>        /// 鼠标进入事件，当鼠标进入时调用        /// </summary>
         public PointerEnter pointerEnter;
         /// <summary>        
-        /// /// 鼠标进入事件的调用，请在pointerEnter中添加事件       
-        /// /// </summary>
+        /// 鼠标进入事件的调用，请在pointerEnter中添加事件       
+        /// </summary>
         public void OnPointerEnter(PointerEventData eventData)
         {
             if (pointerEnter != null)

@@ -22,7 +22,16 @@ namespace Common
             {
                 CreateDictionary();
             }
-            return fileMaps[names];
+            string path;
+            if(fileMaps.TryGetValue(names, out path))
+            {
+                return path;
+            }
+            else
+            {
+                Debug.Log(names + " is null");
+                return null;
+            }
         }
 
         private void CreateDictionary()

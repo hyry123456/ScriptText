@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// 池化的子弹，由对象池进行创建以及删除
 /// </summary>
-public class Bullet_Pooling : ObjectPoolBase
+public class Bullet_Pooling : ObjectPoolingBase
 {
     float time;
     /// <summary> /// 子弹最多存活事件，超过就会自动死亡 /// </summary>
@@ -15,11 +15,7 @@ public class Bullet_Pooling : ObjectPoolBase
     [SerializeField]
     float moveSpeed = 10;
     ParticleDrawData drawData;
-    /// <summary>    /// 每一帧初始化一下时间，只有时间需要次次初始化    /// </summary>
-    protected override void OnEnable()
-    {
-        time = 0;
-    }
+
 
     //绘制数据只用初始化一次就够了，因此放在这里初始化
     public override void InitializeObject(Vector3 positon, Vector3 lookAt)
@@ -128,4 +124,8 @@ public class Bullet_Pooling : ObjectPoolBase
         return;
     }
 
+    public override void OnInitialize()
+    {
+        time = 0;
+    }
 }

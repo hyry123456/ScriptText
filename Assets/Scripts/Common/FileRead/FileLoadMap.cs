@@ -26,6 +26,7 @@ namespace Common
         }
 
         /// <summary>
+        /// 根据文件名称自动读取文本文件夹中的文件数据，
         /// 将每一个用‘<>’区分的数据作为一个Pair，其中
         /// ‘=’前的是name，后面的是value
         /// </summary>

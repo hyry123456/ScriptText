@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 
 namespace Common
@@ -17,14 +18,17 @@ namespace Common
             }
         }
 
-        private const string allTaskName = "AllTask";
-        private const string completeTaskName = "CompleteTask";
-        private const string runtimeTaskName = "RuntimeTask";
-        private const string allPackagesName = "AllPackages";
-        private const string obtainPackagesName = "ObtainPackages";
+        public const string allTaskName = "AllTask";
+        public const string completeTaskName = "CompleteTask";
+        public const string runtimeTaskName = "RuntimeTask";
+        public const string allPackagesName = "AllPackages";
+        public const string obtainPackagesName = "ObtainPackages";
+        public const string playerInfo = "PlayerData";
+        public const string scenePrefix = "ScenePrefix";
+        public const string sceneData = "SceneData";
 
         [SerializeField]
-        private FileLoadAsset asset;
+        private FileLoadAsset asset = default;
 
         private static FileLoadAsset loadAsset;
         /// <summary>
@@ -34,16 +38,28 @@ namespace Common
         public static FileLoadAsset LoadAsset=>loadAsset;
 
 
-        private bool isLoadComplete;
-        public bool IsLoadComplete => isLoadComplete;
+        private static bool isLoadComplete = false;
+        public static bool IsLoadComplete => isLoadComplete;
+
+        /// <summary> /// 设置该项目需要重新加载，比如闯关失败之类的  /// </summary>
+        public static void SetDataNeedReload()
+        {
+            isLoadComplete = false;
+        }
 
         private void Awake()
         {
             instance = this;
             if (loadAsset == null)
                 loadAsset = asset;
-            isLoadComplete = false;
-            AsyncLoad.Instance.AddAction(LoadList);     //加载任务
+            SceneControl control = SceneControl.Instance;   //提前加载一下
+            SustainCoroutine sustain = SustainCoroutine.Instance;
+
+            //只有第一次加载
+            if(!isLoadComplete)
+                AsyncLoad.Instance.AddAction(LoadList);     //加载任务
+            else
+                AsyncLoad.Instance.AddAction(AsynReady);     //加载任务
         }
 
         private void OnDestroy()
@@ -58,7 +74,8 @@ namespace Common
         {
             AsynLoadTask();
             AsynLoadPackage();
-
+            AsynLoadInfo();
+            AsynLoadScene();        //加载场景同时切换场景
             isLoadComplete = true;      //表示加载完毕
         }
 
@@ -81,6 +98,36 @@ namespace Common
             loadData.packageClassNames = loadMap.LoadFile(allPackagesName);
             loadData.obtainItemAndCounts = loadMap.LoadFileToPair(obtainPackagesName);
             Package.PackageControl.Instance.LoadPackageData(loadData);
+        }
+
+        /// <summary>  /// 多线程加载角色信息 /// </summary>
+        private void AsynLoadInfo()
+        {
+            FileLoadMap loadMap = FileLoadMap.Instance(loadAsset);
+            List<KeyValuePair<string, string>> loadData =
+                loadMap.LoadFileToPair(playerInfo);
+            Info.InfoMap.Instance.LoadInfoMap(loadData);
+        }
+
+        /// <summary>  /// 多线程加载场景信息   /// </summary>
+        private void AsynLoadScene()
+        {
+            FileLoadMap loadMap = FileLoadMap.Instance(loadAsset);
+            List<KeyValuePair<string, string>> loadData =
+                loadMap.LoadFileToPair(sceneData);
+            SceneControl.Instance.LoadSceneDataByFile(loadData);
+        }
+
+        private void AsynReady()
+        {
+            AsyncLoad.Instance.AddAction(ReadySceneData);
+        }
+
+        /// <summary>  /// 准备场景数据，用来在非第一次加载游戏场景时调用  /// </summary>
+        private void ReadySceneData()
+        {
+            SceneControl.Instance.LoadSceneDataBySet(
+                Application.streamingAssetsPath + asset.FindPath(scenePrefix));
         }
     }
 }

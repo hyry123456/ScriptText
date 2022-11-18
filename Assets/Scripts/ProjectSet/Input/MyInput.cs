@@ -13,7 +13,12 @@ namespace Common.ResetInput
     {
         private static MyInput input = null;
         [SerializeField]
-        public MyInputValueStruct[] myInputValues;
+        private MyInputValueStruct[] myInputValues;
+        public MyInputValueStruct[] MyInputValues => myInputValues;
+        public void SetInputStruct(MyInputValueStruct[] input)
+        {
+            myInputValues = input;
+        }
 
         public string targetPath = "InputFile.input";
 
@@ -230,6 +235,19 @@ namespace Common.ResetInput
 
             Debug.LogError(axisName + " is null");
             return false;
+        }
+
+        public KeyCode GetAxisKey(string axisName)
+        {
+            for (int i = 0; i < myInputValues.Length; i++)
+            {
+                if (myInputValues[i].asisName.Equals(axisName))
+                {
+                    return myInputValues[i].valueUp;
+                }
+            }
+            Debug.LogError("查找失败");
+            return KeyCode.None;
         }
 
         /// <summary>

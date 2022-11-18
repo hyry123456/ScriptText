@@ -6,9 +6,9 @@ namespace Common
     public class DataSave
     {
         private static DataSave instance;
-        private const string completeTaskName = "CompleteTask";
-        private const string runtimeTaskName = "RuntimeTask";
-        private const string obtainPackagesName = "ObtainPackages";
+        //private const string completeTaskName = "CompleteTask";
+        //private const string runtimeTaskName = "RuntimeTask";
+        //private const string obtainPackagesName = "ObtainPackages";
 
         public static DataSave Instance
         {
@@ -23,6 +23,7 @@ namespace Common
         }
 
         private bool isSaveComplete;
+        public bool IsSaveComplete => isSaveComplete;
         private DataSave()
         {
         }
@@ -40,8 +41,8 @@ namespace Common
             if (DataLoad.LoadAsset == null)
                 return;
             SaveTaskData();
-
-            isSaveComplete=true;
+            SaveInfoData();
+            isSaveComplete =true;
         }
 
         private void SaveTaskData()
@@ -50,11 +51,20 @@ namespace Common
             string completeTask = Task.AsynTaskControl.Instance.GetCompleteTaskData();
             FileLoadAsset loadAsset = DataLoad.LoadAsset;
             string prefit = Application.streamingAssetsPath;
-            FileReadAndWrite.WriteFile(prefit + loadAsset.FindPath(runtimeTaskName),
+            FileReadAndWrite.WriteFile(prefit + loadAsset.FindPath(DataLoad.runtimeTaskName),
                 runtimeTask);
-            FileReadAndWrite.WriteFile(prefit + loadAsset.FindPath(completeTaskName),
+            FileReadAndWrite.WriteFile(prefit + loadAsset.FindPath(DataLoad.completeTaskName),
                 completeTask);
             Debug.Log("保存完毕");
+        }
+
+        private void SaveInfoData()
+        {
+            string prefit = Application.streamingAssetsPath;
+            string infoData = Info.InfoMap.Instance.GetSaveString();
+            FileLoadAsset loadAsset = DataLoad.LoadAsset;
+            FileReadAndWrite.WriteFile(prefit + 
+                loadAsset.FindPath(DataLoad.playerInfo), infoData);
         }
 
         public static void ClearData()
@@ -63,13 +73,14 @@ namespace Common
             string prefit = Application.streamingAssetsPath;
             //清理任务数据
             FileReadAndWrite.WriteFile(prefit + 
-                loadAsset.FindPath(runtimeTaskName), "");
+                loadAsset.FindPath(DataLoad.runtimeTaskName), "");
             FileReadAndWrite.WriteFile(prefit + 
-                loadAsset.FindPath(completeTaskName), "");
-
+                loadAsset.FindPath(DataLoad.completeTaskName), "");
+            //清除背包数据
             FileReadAndWrite.WriteFile(prefit +
-                loadAsset.FindPath(obtainPackagesName), "");
+                loadAsset.FindPath(DataLoad.obtainPackagesName), "");
         }
+
 
 
     }

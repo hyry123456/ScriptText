@@ -20,16 +20,10 @@ namespace DefferedRender
         //存储GBuffer的一般贴图的数组
         static int[] gBufferIds = 
         {
-            Shader.PropertyToID("_GBufferColorTex"),    //颜色纹理
-            Shader.PropertyToID("_GBufferNormalTex"),   //法线纹理
-            Shader.PropertyToID("_GBufferSpecularTex"), //高光纹理
-        };
-
-        //存储GBuffer中HDR贴图的数组
-        static int[] gBufferHDRIds =
-        {
-            Shader.PropertyToID("_GBufferBakeTex"),     //烘焙、自发光纹理
-            Shader.PropertyToID("_ReflectTargetTex"),   //GBuffer的反射贴图
+            Shader.PropertyToID("_GBufferRT0"),     //rgb:abledo,w:metalness
+            Shader.PropertyToID("_GBufferRT1"),     //R,G:EncodeNormal
+            Shader.PropertyToID("_GBufferRT2"),     //rgb:emissive,w:roughness
+            Shader.PropertyToID("_GBufferRT3"),     //rgb:reflect,w:AO
         };
 
         /// <summary>        /// 上一帧的最终纹理，用来给SSS采样        /// </summary>
@@ -84,6 +78,7 @@ namespace DefferedRender
 
         //int sssPyramidId;
         PostFXStack postFXStack = new PostFXStack();
+        //最终存储所有GBuffer的数组
         RenderTargetIdentifier[] gBuffers;
         int width, height;
         public DefferRender(Shader shader)
@@ -141,8 +136,8 @@ namespace DefferedRender
 
             //渲染Gbuffer数据，准备深度图
             DrawGBuffer();
-            if(camera.cameraType == CameraType.Game)
-                lighting.ReadyClusterLight(camera, lightSetting.clusterLightSetting, gBufferDepthId);
+            lighting.ReadyClusterLight(camera, lightSetting.clusterLightSetting, 
+                gBufferDepthId, buffer, width, height, renderSetting.isDebug);
 
             //渲染GBuffer最终颜色以及透明队列以及天空盒
             DrawGBufferLater();
@@ -202,42 +197,14 @@ namespace DefferedRender
             height = (int)(camera.pixelHeight * renderSetting.renderScale);
             buffer.SetGlobalVector(bufferSizeId, new Vector4(
                 1f / width, 1f / height, width, height));
-
             //GBuffer后处理到的目标纹理
             buffer.GetTemporaryRT(
-                colorAttachmentId, width, height,0, FilterMode.Bilinear, useHDR ?
+                colorAttachmentId, width, height, 0, FilterMode.Bilinear, useHDR ?
                     RenderTextureFormat.DefaultHDR : RenderTextureFormat.Default
             );
+            CreateGBuffer();
 
-            //获取深度图
-            buffer.GetTemporaryRT(
-                gBufferDepthId, width, height,
-                32, FilterMode.Point, RenderTextureFormat.Depth
-            );
-            //存储全部的Gbuffer数组
-            gBuffers = new RenderTargetIdentifier[gBufferIds.Length + gBufferHDRIds.Length];
-
-            //准备的一般的GBuffer，也就是不需要HDR存储的
-            for (int i=0; i<gBufferIds.Length; i++)
-            {
-                buffer.GetTemporaryRT(
-                    gBufferIds[i], width, height,
-                    0, FilterMode.Bilinear, RenderTextureFormat.DefaultHDR
-                );
-                gBuffers[i] = gBufferIds[i];
-            }
-            //准备需要HDR存储的GBuffer数据
-            for (int i=0; i<gBufferHDRIds.Length; i++)
-            {
-                buffer.GetTemporaryRT(
-                    gBufferHDRIds[i], width, height,
-                    0, FilterMode.Bilinear, useHDR ?
-                    RenderTextureFormat.DefaultHDR : RenderTextureFormat.Default
-                );
-                gBuffers[gBufferIds.Length + i] = gBufferHDRIds[i];
-            }
-
-            //清除上一帧的数据
+            //清除摄像机的数据
             buffer.ClearRenderTarget(true, true, Color.clear);
 
             //设置渲染目标，传递所有的渲染目标
@@ -248,7 +215,7 @@ namespace DefferedRender
 
             buffer.BeginSample(SampleName);
 
-            //清除上一帧的数据
+            //清除当前设置的目标纹理的数据
             buffer.ClearRenderTarget(true, true, Color.clear);
 
             Matrix4x4 frustum = GetFrustumMatrix();
@@ -293,6 +260,35 @@ namespace DefferedRender
             ExecuteBuffer();
         }
 
+        private void CreateGBuffer()
+        {
+            //获取深度图
+            buffer.GetTemporaryRT(
+                gBufferDepthId, width, height,
+                32, FilterMode.Point, RenderTextureFormat.Depth);
+            //存储全部的Gbuffer数组
+            gBuffers = new RenderTargetIdentifier[gBufferIds.Length];
+            //赋值编号
+            for(int i=0; i<gBuffers.Length; i++)
+            {
+                gBuffers[i] = gBufferIds[i];
+            }
+            buffer.GetTemporaryRT(gBufferIds[0], width, height, 0,
+                FilterMode.Bilinear, RenderTextureFormat.ARGBFloat, 
+                RenderTextureReadWrite.Linear, 1, true);
+            buffer.GetTemporaryRT(gBufferIds[1], width, height, 0,
+                FilterMode.Bilinear, RenderTextureFormat.RG32,
+                RenderTextureReadWrite.Linear, 1, true);
+            //设置为HDR，方便自发光
+            buffer.GetTemporaryRT(gBufferIds[2], width, height, 0,
+                FilterMode.Bilinear, RenderTextureFormat.DefaultHDR,
+                RenderTextureReadWrite.Linear, 1, true);
+            //设置为HDR，用来存储HDR的反射数据
+            buffer.GetTemporaryRT(gBufferIds[3], width, height, 0,
+                FilterMode.Bilinear, RenderTextureFormat.DefaultHDR,
+                RenderTextureReadWrite.Linear, 1, true);
+        }
+
         SortingSettings sortingSettings;
         DrawingSettings drawingSettings;
         FilteringSettings filteringSettings;
@@ -330,6 +326,8 @@ namespace DefferedRender
 
             //渲染GPU驱动的标准PBR数据
             GPUDravinDrawStack.Instance.DrawPreSSS(context, buffer, camera);
+
+
             ExecuteBuffer();
         }
 
@@ -348,6 +346,7 @@ namespace DefferedRender
 
             //绘制天空盒
             context.DrawSkybox(camera);
+
 
             //用上一帧的颜色值作为当前的颜色贴图
             buffer.SetGlobalTexture("PerFrameFinalTexture", preFrameFinalTex);
@@ -375,14 +374,22 @@ namespace DefferedRender
             //绘制ComputeShader实现的物体
             GPUDravinDrawStack.Instance.BeginDraw(context, buffer,
                 ClustDrawType.Simple, camera);
+
+            FluidDrawStack.Instance.BeginDrawFluid(context, buffer,
+                gBuffers, gBufferDepthId, width, height, colorAttachmentId);
+
             ExecuteBuffer();
         }
 
         /// <summary>        /// 确定GBuffer最后的颜色        /// </summary>
         void DrawGBufferFinal()
         {
-            postFXStack.DrawSSS(preFrameFinalTex, gBufferHDRIds[1]);
-            postFXStack.DrawGBufferFinal(colorAttachmentId);
+            //postFXStack.DrawSSS(preFrameFinalTex, gBufferIds[3]);
+            buffer.SetRenderTarget(colorAttachmentId, 
+                RenderBufferLoadAction.DontCare, RenderBufferStoreAction.DontCare);
+            ExecuteBuffer();
+            postFXStack.DrawSSS(preFrameFinalTex, gBufferIds);
+            postFXStack.DrawGBufferFinal(colorAttachmentId, gBufferIds[3]);
             ExecuteBuffer();
         }
 
@@ -429,18 +436,10 @@ namespace DefferedRender
             buffer.ReleaseTemporaryRT(colorAttachmentId);
             buffer.ReleaseTemporaryRT(gBufferDepthId);
             buffer.ReleaseTemporaryRT(cameraDepthTexId);
-            //buffer.ReleaseTemporaryRT(reflectTargetTexId);
-            //buffer.ReleaseTemporaryRT(tempRenderTexId);
-            //buffer.ReleaseTemporaryRT(cameraColorTexId);
-            //buffer.ReleaseTemporaryRT(cameraDepthTexId);
-            //buffer.ReleaseTemporaryRT(cameraNormalTexId);
+
             for(int i=0; i<gBufferIds.Length; i++)
             {
                 buffer.ReleaseTemporaryRT(gBufferIds[i]);
-            }
-            for(int i=0; i<gBufferHDRIds.Length; i++)
-            {
-                buffer.ReleaseTemporaryRT(gBufferHDRIds[i]);
             }
 
             lighting.Cleanup();		//灯光数据清除

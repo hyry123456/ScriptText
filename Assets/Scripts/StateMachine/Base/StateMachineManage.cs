@@ -149,7 +149,7 @@ namespace StateMachine
             characterInfo = GetComponent<Info.CharacterInfo>();
             navMeshAgent = GetComponent<NavMeshAgent>();
             if(navMeshAgent != null)
-                navMeshAgent.speed = characterInfo.walkSpeed;   //默认设置为行走速度
+                navMeshAgent.speed = characterInfo.WalkSpeed;   //默认设置为行走速度
 
             if (beginState != null)
             {

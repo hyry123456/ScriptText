@@ -1,5 +1,6 @@
 
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Interaction
 {
@@ -38,6 +39,7 @@ namespace Interaction
         public float interacteCheckDistance = 3f;
         [SerializeField]
         GameObject interacteRemain;
+        Text remainText;
 
         private bool isInteracting = false;
         //public bool IsInteracting
@@ -55,6 +57,8 @@ namespace Interaction
                 Destroy(gameObject);
             }
             instance = this;
+            if (interacteRemain != null)
+                remainText = interacteRemain.GetComponentInChildren<Text>();
         }
 
         /// <summary> /// 检查是否有可以交互的对象  /// </summary>
@@ -85,6 +89,7 @@ namespace Interaction
                     interacteRemain.SetActive(true);
                     interacteRemain.transform.position = nowInteractionInfo.
                         transform.position + Vector3.up * 0.5f;
+                    remainText.text = nowInteractionInfo.GetInteracteRemain();
                 }
             }
         }

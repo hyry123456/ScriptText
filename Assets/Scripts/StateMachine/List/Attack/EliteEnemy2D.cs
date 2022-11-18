@@ -112,7 +112,7 @@ namespace StateMachine
         {
             Vector3 targetDir = player.position - manage.transform.position;
             manage.EnemyMotor.Move(targetDir.x / 
-                manage.CharacterInfo.walkSpeed, 0);
+                manage.CharacterInfo.WalkSpeed, 0);
         }
         /// <summary>    /// 判断是否正在待机，是就更新待机时间       /// </summary>
         private bool IsShuffling(StateMachineManage manage, Transform player)

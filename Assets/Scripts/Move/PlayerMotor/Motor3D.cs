@@ -95,7 +95,7 @@ namespace Motor
                 desiredVelocity = playerInputSpace.forward * playInput.x + playerInputSpace.right * playInput.y;
             else
                 desiredVelocity = Vector3.forward * playInput.x + Vector3.right * playInput.y;
-            desiredVelocity = desiredVelocity * characterInfo.runSpeed;
+            desiredVelocity = desiredVelocity * characterInfo.RunSpeed;
         }
 
         public override void DesireJump()
@@ -386,7 +386,7 @@ namespace Motor
             if (elure.magnitude > 0.0001f)
             {
                 transform.LookAt(transform.position + Vector3.Lerp(
-                    transform.forward, elure, Time.fixedDeltaTime * characterInfo.rotateSpeed
+                    transform.forward, elure, Time.fixedDeltaTime * characterInfo.RotateSpeed
                     ));
             }
         }

@@ -19,21 +19,21 @@ namespace Common.ResetInput
                 return;
             }
             ExternalSetInput externalSetInput = go.GetComponent<ExternalSetInput>();
-            myInput.myInputValues = new MyInputValueStruct[externalSetInput.inputValues.Length];
+            myInput.SetInputStruct(new MyInputValueStruct[externalSetInput.inputValues.Length]);
             for (int i=0; i<externalSetInput.inputValues.Length; i++)
             {
-                myInput.myInputValues[i].valueType = externalSetInput.inputValues[i].valueType;
-                myInput.myInputValues[i].value = externalSetInput.inputValues[i].value;
+                myInput.MyInputValues[i].valueType = externalSetInput.inputValues[i].valueType;
+                myInput.MyInputValues[i].value = externalSetInput.inputValues[i].value;
                 
                 int value = EnsureValue(externalSetInput.inputValues[i].valueUp);
                 if (value == -1) return;
-                myInput.myInputValues[i].valueUp = (KeyCode)value;
+                myInput.MyInputValues[i].valueUp = (KeyCode)value;
                 value = EnsureValue(externalSetInput.inputValues[i].valueDown);
                 if (value == -1) return;
-                myInput.myInputValues[i].valueDown = (KeyCode)value;
+                myInput.MyInputValues[i].valueDown = (KeyCode)value;
 
-                myInput.myInputValues[i].asisName = externalSetInput.inputValues[i].asisName;
-                myInput.myInputValues[i].changeSpeed = externalSetInput.inputValues[i].changeSpeed;
+                myInput.MyInputValues[i].asisName = externalSetInput.inputValues[i].asisName;
+                myInput.MyInputValues[i].changeSpeed = externalSetInput.inputValues[i].changeSpeed;
             }
             myInput.ResetInputValue();
         }
@@ -88,23 +88,23 @@ namespace Common.ResetInput
                 Debug.LogWarning("无法加载Input");
                 return;
             }
-            externalSetInput.inputValues = new InputValueOutReadStruct[MyInput.Instance.myInputValues.Length];
-            for (int i=0; i<MyInput.Instance.myInputValues.Length; i++)
+            externalSetInput.inputValues = new InputValueOutReadStruct[MyInput.Instance.MyInputValues.Length];
+            for (int i=0; i<MyInput.Instance.MyInputValues.Length; i++)
             {
-                string keyCode = MyInput.Instance.myInputValues[i].valueDown.ToString();
+                string keyCode = MyInput.Instance.MyInputValues[i].valueDown.ToString();
                 //赋值对应轴的值
                 if (keyCode[0] >= '0' && keyCode[0] <= '9')
-                    externalSetInput.inputValues[i].valueDown = ((char)MyInput.Instance.myInputValues[i].valueDown).ToString();
+                    externalSetInput.inputValues[i].valueDown = ((char)MyInput.Instance.MyInputValues[i].valueDown).ToString();
                 else externalSetInput.inputValues[i].valueDown = keyCode;
 
-                keyCode = MyInput.Instance.myInputValues[i].valueUp.ToString();
+                keyCode = MyInput.Instance.MyInputValues[i].valueUp.ToString();
                 if(keyCode[0] >= '0' && keyCode[0] <= '9')
-                    externalSetInput.inputValues[i].valueUp = ((char)MyInput.Instance.myInputValues[i].valueUp).ToString();
+                    externalSetInput.inputValues[i].valueUp = ((char)MyInput.Instance.MyInputValues[i].valueUp).ToString();
                 else externalSetInput.inputValues[i].valueUp = keyCode;
 
-                externalSetInput.inputValues[i].valueType = MyInput.Instance.myInputValues[i].valueType;
-                externalSetInput.inputValues[i].changeSpeed = MyInput.Instance.myInputValues[i].changeSpeed;
-                externalSetInput.inputValues[i].asisName = MyInput.Instance.myInputValues[i].asisName;
+                externalSetInput.inputValues[i].valueType = MyInput.Instance.MyInputValues[i].valueType;
+                externalSetInput.inputValues[i].changeSpeed = MyInput.Instance.MyInputValues[i].changeSpeed;
+                externalSetInput.inputValues[i].asisName = MyInput.Instance.MyInputValues[i].asisName;
             }
         }
 

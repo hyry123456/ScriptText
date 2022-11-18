@@ -48,6 +48,24 @@ namespace Common
             }
             return false;
         }
+
+        /// <summary>/// 判断是否在协程栈中已经存在此物体，存在就返回编号 /// </summary>
+        /// <param name="find">查找的物体</param>
+        /// <param name="index">位于的编号</param>
+        /// <returns>是否找到</returns>
+        public bool IsHave(T find, out int index)
+        {
+            for (int i = 0; i < size; i++)
+            {
+                if (find.Equals(coroutines[i]))
+                {
+                    index = i;
+                    return true;
+                }
+            }
+            index = -1;
+            return false;
+        }
     }
 
 
@@ -69,7 +87,10 @@ namespace Common
             }
         }
         private bool isRunning = false;
-        private SustainList<CoroutinesAction> sustainList = new SustainList<CoroutinesAction>();
+        private SustainList<CoroutinesAction> sustainList 
+            = new SustainList<CoroutinesAction>();
+        private SustainList<CoroutinesAction> removeList
+            = new SustainList<CoroutinesAction>();
 
         private void Awake()
         {
@@ -117,6 +138,19 @@ namespace Common
             if (canWait) return;
             StopAllCoroutines();
             StartCoroutine(Run());
+        }
+
+        /// <summary>
+        /// 加入到等待移除协程中，如果该协程没有执行，那么会被从运行栈中移除
+        /// </summary>
+        public void RemoveCoroutine(CoroutinesAction action)
+        {
+            int index;
+            if (sustainList.IsHave(action, out index))
+            {
+                sustainList.Remove(index);
+                return;
+            }
         }
 
     }

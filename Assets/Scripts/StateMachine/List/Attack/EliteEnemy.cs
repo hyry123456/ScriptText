@@ -111,7 +111,7 @@ namespace StateMachine
             manage.transform.rotation =
                 Quaternion.Lerp(manage.transform.rotation,
                 Quaternion.LookRotation(targetDir, Vector3.up),
-                manage.CharacterInfo.rotateSpeed * Time.deltaTime);
+                manage.CharacterInfo.RotateSpeed * Time.deltaTime);
         }
 
 

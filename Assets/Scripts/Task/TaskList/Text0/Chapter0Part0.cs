@@ -10,10 +10,11 @@ namespace Task
         Common.NPC_Pooling nPC;
         UI.CharacterDialog dialog;
 
+        int choseIndex = 0;
+
         public override void EnterTaskEvent(Chapter chapter, bool isLoaded)
         {
             base.EnterTaskEvent(chapter, isLoaded);
-            Debug.Log("章节进入");
             Common.SustainCoroutine.Instance.AddCoroutine(Wait);
         }
 
@@ -49,18 +50,48 @@ namespace Task
                 });
                 
             };
+
+
+            string[] strings = new string[]
+            {
+                chapter.GetDiglogText(0),
+                chapter.GetDiglogText(1),
+                chapter.GetDiglogText(2),
+            };
+            choseIndex = -1;
+
+            UI.OptionUI.Instance.AddOptions(strings, (index) =>
+            {
+                Debug.Log("按下了第" + index.ToString() + "选项");
+                choseIndex = index;
+            });
+
             return true;
         }
 
 
-        public override void ExitTaskEvent(Chapter chapter)
+        public override void ExitTaskEvent(Chapter chapter, bool isInterrupt)
         {
-            Debug.Log("章节退出");
+            if (isInterrupt)
+            {
+                //当被打断时，看看如果仍在池中就打断
+                Common.SustainCoroutine.Instance.RemoveCoroutine(Wait);
+            }
         }
 
         public override bool IsCompleteTask(Chapter chapter, InteracteInfo info)
         {
             return true;
+        }
+
+        public override string GetNextPartString()
+        {
+            return null;
+        }
+
+        public override string GetThisPartString()
+        {
+            return "0";
         }
     }
 }

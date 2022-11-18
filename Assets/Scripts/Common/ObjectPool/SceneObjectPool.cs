@@ -24,7 +24,7 @@ namespace Common
             }
         }
 
-        private Dictionary<string, PoolingList<ObjectPoolBase>>
+        private Dictionary<string, PoolingList<ObjectPoolingBase>>
             objectPools;
 
         private void Awake()
@@ -35,12 +35,21 @@ namespace Common
                 return;
             }
             instance = this;
-            objectPools = new Dictionary<string, PoolingList<ObjectPoolBase>>();
+            objectPools = new Dictionary<string, PoolingList<ObjectPoolingBase>>();
         }
         private void OnDestroy()
         {
             instance = null;
             if (objectPools == null) return;
+            //foreach(var pair in objectPools)
+            //{
+            //    while(pair.Value.Count > 0)
+            //    {
+            //        ObjectPoolingBase obj = pair.Value.GetValue(0);
+            //        pair.Value.Remove(0);
+            //        Destroy(obj);
+            //    }
+            //}
             objectPools.Clear();
         }
 
@@ -53,10 +62,11 @@ namespace Common
         /// <param name="postion">初始化的位置</param>
         /// <param name="quaternion">旋转数据</param>
         public T GetObject<T>(string name, GameObject origin,
-            Vector3 postion, Quaternion quaternion) where T : ObjectPoolBase
+            Vector3 postion, Quaternion quaternion) where T : ObjectPoolingBase
         {
             T objectPool = (T)GetData(name, origin);
             objectPool.InitializeObject(postion, quaternion);
+            objectPool.OnInitialize();
             return objectPool;
         }
 
@@ -69,19 +79,20 @@ namespace Common
         /// <param name="postion">初始化的位置</param>
         /// <param name="lookAt">物体看向的目标位置</param>
         public T GetObject<T>(string name, GameObject origin,
-            Vector3 postion, Vector3 lookAt) where T : ObjectPoolBase
+            Vector3 postion, Vector3 lookAt) where T : ObjectPoolingBase
         {
             T objectPool = (T)GetData(name, origin);
             objectPool.InitializeObject(postion, lookAt);
+            objectPool.OnInitialize();
             return objectPool;
         }
 
-        private ObjectPoolBase GetData(string name, GameObject origin)
+        private ObjectPoolingBase GetData(string name, GameObject origin)
         {
-            PoolingList<ObjectPoolBase> list;
+            PoolingList<ObjectPoolingBase> list;
             if (!objectPools.TryGetValue(name, out list))
             {
-                list = new PoolingList<ObjectPoolBase>();
+                list = new PoolingList<ObjectPoolingBase>();
                 objectPools.Add(name, list);
             }
             if (list.Count == 0)     //池中为空，创建一个
@@ -91,7 +102,7 @@ namespace Common
                 gameObject.transform.parent = transform;        //放到池中管理
                 gameObject.name = name;             //设置统一的名称
 
-                ObjectPoolBase poolBase = gameObject.GetComponent<ObjectPoolBase>();
+                ObjectPoolingBase poolBase = gameObject.GetComponent<ObjectPoolingBase>();
                 if (poolBase == null)
                 {
                     Debug.LogError("根据物体不可被对象池管理");
@@ -101,23 +112,23 @@ namespace Common
                 return poolBase;
             }
             //从池中取出一个对象
-            ObjectPoolBase objectPool = list.GetValue(0);
+            ObjectPoolingBase objectPool = list.GetValue(0);
             list.Remove(0);         //从池中移除该对象
             return objectPool;
         }
 
         /// <summary>  /// 回收该被游戏对象池管理的物体  /// </summary>
         /// <param name="objectPoolBase">被管理的物体</param>
-        public void RecyclingObjects(ObjectPoolBase objectPoolBase)
+        public void RecyclingObjects(ObjectPoolingBase objectPoolBase)
         {
             objectPoolBase.gameObject.SetActive(false);
-            PoolingList<ObjectPoolBase> list;
+            PoolingList<ObjectPoolingBase> list;
             if(objectPools.TryGetValue(objectPoolBase.objectName, out list))
             {
                 list.Add(objectPoolBase);
                 return;
             }
-            list = new PoolingList<ObjectPoolBase>();
+            list = new PoolingList<ObjectPoolingBase>();
             list.Add(objectPoolBase);
             objectPools.Add(objectPoolBase.objectName, list);
         }

@@ -8,9 +8,9 @@ namespace Task
         public Chapter0()
         {
             chapterName = "测试章节";
-            taskPartCount = 1;
             chapterID = 0;
             targetPart = targetPart + "Chapter0Part";
+            chapterSavePath = Application.streamingAssetsPath + "/Task/Chapter/0.task";
             runtimeScene = "SimpleText";
         }
 
@@ -22,11 +22,11 @@ namespace Task
 
         public override void CompleteChapter(bool isInThisScene)
         {
+            Debug.Log("章节完成");
         }
 
         public override void ExitChapter()
         {
-            Debug.Log("章节完成");
         }
     }
 }

@@ -199,7 +199,7 @@ namespace Motor
             if (elure.sqrMagnitude > 0.1f)
             {
                 transform.rotation = Quaternion.Lerp(
-                    Quaternion.Euler(elure), transform.rotation, characterInfo.rotateSpeed);
+                    Quaternion.Euler(elure), transform.rotation, characterInfo.RotateSpeed);
             }
         }
 
@@ -215,7 +215,7 @@ namespace Motor
             Vector2 playInput = new Vector2(horizontal, vertical);
             playInput = Vector2.ClampMagnitude(playInput, 1);
             desiredVelocity = Vector3.forward * playInput.x + Vector3.right * playInput.y;
-            desiredVelocity = desiredVelocity * characterInfo.runSpeed;
+            desiredVelocity = desiredVelocity * characterInfo.RunSpeed;
         }
 
         public override void DesireJump()

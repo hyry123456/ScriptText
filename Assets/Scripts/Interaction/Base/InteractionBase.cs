@@ -1,33 +1,30 @@
-using System.Collections;
-using UnityEngine;
+ï»¿using UnityEngine;
 
 namespace Interaction
 {
-    /// <summary>    /// ½»»¥ĞÅÏ¢Àà£¬ÓÃÀ´´æ´¢½»»¥ÄÚÈİ    /// </summary>
+    /// <summary>    /// äº¤äº’ä¿¡æ¯ç±»ï¼Œç”¨æ¥å­˜å‚¨äº¤äº’å†…å®¹    /// </summary>
     public struct InteracteInfo
     {
         public string data;
         public int id;
     }
 
-    /// <summary>    /// ½»»¥Àà»ùÀà£¬¹ÒÔÚÎïÌåÉÏ£¬ÓÃÀ´Ö´ĞĞ¼òµ¥µÄ½»»¥    /// </summary>
+    /// <summary>    /// äº¤äº’ç±»åŸºç±»ï¼ŒæŒ‚åœ¨ç‰©ä½“ä¸Šï¼Œç”¨æ¥æ‰§è¡Œç®€å•çš„äº¤äº’    /// </summary>
     public abstract class InteractionBase : MonoBehaviour
     {
-        [HideInInspector]
-        public InteractionType interactionType;
-        /// <summary>        /// ĞèÒª×¢Òâ£¬½»»¥IDÒ»°ã²»ÊÇÓÃÓÚÌØ±ğÖ¸¶¨£¬¶øÊÇÔÚÒ»Ğ©ÌØÊâÇé¿öÏÂ½øĞĞÁÙÊ±¸³ÖµÓÃµÄ
-        /// Ò²¾ÍÊÇËµ³õÊ¼»¯²»ĞèÒª¸³Öµ¸ÃÊôĞÔ/// </summary>
-        public int interactionID = 0;
-        /// <summary>        /// ³õÊ¼»¯ÀàÃû³Æ£¬Ë³±ã×÷Îª½»»¥µÄÌáÊ¾ĞÅÏ¢        /// </summary>
-        public string interactionName;
-
         /// <summary>
-        /// ³õÊ¼»¯InteractionType»¹ÓĞinteractionName
+        /// åˆå§‹åŒ–InteractionTypeè¿˜æœ‰interactionName
         /// </summary>
         protected abstract void OnEnable();
 
-        /// <summary>        /// ¸Ã½»»¥ĞĞÎªĞèÒª¸ÉµÄÊÂÇé        /// </summary>
+        /// <summary>        /// è¯¥äº¤äº’è¡Œä¸ºéœ€è¦å¹²çš„äº‹æƒ…        /// </summary>
         public abstract void InteractionBehavior(Common.INonReturnAndNonParam recall);
+
+        public virtual string GetInteracteRemain()
+        {
+            return "æŒ‰ä¸‹" + Common.ResetInput.MyInput.
+                Instance.GetAxisKey("Interaction").ToString() + "å¼€å¯äº¤äº’";
+        }
 
     }
 }

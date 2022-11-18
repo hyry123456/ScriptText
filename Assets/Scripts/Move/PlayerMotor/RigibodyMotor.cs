@@ -102,7 +102,7 @@ namespace Motor
             {
                 desiredVelocity = Vector3.forward * playInput.x + Vector3.right * playInput.y;
             }
-            desiredVelocity = desiredVelocity * characterInfo.runSpeed;
+            desiredVelocity = desiredVelocity * characterInfo.RunSpeed;
         }
 
         private void FixedUpdate()
@@ -448,7 +448,7 @@ namespace Motor
         {
             Vector3 angle = transform.eulerAngles;
             //移动角度
-            angle.y = Mathf.MoveTowardsAngle(angle.y, targetRotateY, characterInfo.rotateSpeed);
+            angle.y = Mathf.MoveTowardsAngle(angle.y, targetRotateY, characterInfo.RotateSpeed);
 
             transform.eulerAngles = angle;
         }

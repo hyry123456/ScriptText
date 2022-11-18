@@ -21,5 +21,30 @@ namespace Info
         /// <param name="info">角色信息</param>
         /// <returns>改变成的solid</returns>
         public int OnSolidChange(int solid, CharacterInfo info);
+
+        /// <summary>   /// 得到跑步的速度   /// </summary>
+        /// <param name="info">角色信息</param>
+        /// <param name="runSpeed">跑步速度</param>
+        /// <returns>调整后的跑步速度</returns>
+        public float GetRunSpeed(CharacterInfo info, float runSpeed);
+
+        /// <summary>   /// 得到走路的速度   /// </summary>
+        /// <param name="info">角色信息</param>
+        /// <param name="walkSpeed">走路速度</param>
+        /// <returns>调整后的走路速度</returns>
+        public float GetWalkSpeed(CharacterInfo info, float walkSpeed);
+
+        /// <summary>   /// 得到伤害   /// </summary>
+        /// <param name="info">角色信息</param>
+        /// <param name="attack">伤害</param>
+        /// <returns>调整后的伤害</returns>
+        public int GetAttack(CharacterInfo info, int attack);
+
+
+        /// <summary>   /// 得到防御   /// </summary>
+        /// <param name="info">角色信息</param>
+        /// <param name="defense">防御</param>
+        /// <returns>调整后的防御</returns>
+        public int GetDefense(CharacterInfo info, int defense);
     }
 }

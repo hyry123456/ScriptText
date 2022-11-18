@@ -90,9 +90,10 @@ Material:
     - _Metallic: 0.1
     - _Mode: 0
     - _NormalMapToggle: 1
-    - _NormalScale: 0.37
+    - _NormalScale: 0.54
     - _OcclusionStrength: 1
     - _Parallax: 0.02
+    - _Roughness: 0.5
     - _Smoothness: 0.51
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1

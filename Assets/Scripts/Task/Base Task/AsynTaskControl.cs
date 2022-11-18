@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
-using System;
 using System.Text;
 
 namespace Task
@@ -174,11 +173,15 @@ namespace Task
                 exectuteTasks.Add(chapter);
             }
             //检查是否运行在该场景
-            if(chapter.RuntimeScene 
-                == currentSceneName)
+            if(chapter.RuntimeScene == currentSceneName)
                 chapter.BeginChapter();
+
+            var temp = taskMap[chapter.ChapterID];
+            temp.state = TaskMode.Start;    //标记为开始
+            taskMap[chapter.ChapterID] = temp;
             return true;
         }
+
         /// <summary>
         /// 注册章节函数，用来将章节加入到已获取的章节中，
         /// 同时进行判断，如果是该场景的章节就会进行初始化
@@ -210,9 +213,12 @@ namespace Task
                 exectuteTasks.Add(chapter);
             }
             //检查是否运行在该场景
-            if (chapter.RuntimeScene
-                == Common.SceneControl.Instance.GetRuntimeSceneName())
+            if (chapter.RuntimeScene == Common.SceneControl.Instance.GetRuntimeSceneName())
                 chapter.BeginChapter();
+
+            var temp = taskMap[chapter.ChapterID];
+            temp.state = TaskMode.Start;    //标记为开始
+            taskMap[chapter.ChapterID] = temp;
             return true;
         }
 
@@ -224,7 +230,7 @@ namespace Task
             for(int i=0; i<exectuteTasks.Count; i++)
             {
                 re = re.Append("<" + exectuteTasks[i].ChapterID.ToString() + 
-                    "=" + exectuteTasks[i].CurrentPartIndex.ToString() + ">\n");
+                    "=" + exectuteTasks[i].Part.GetThisPartString() + ">\n");
             }
             return re.ToString();
         }
@@ -268,17 +274,20 @@ namespace Task
             }
             if (taskMap == null)
                 return;
-            foreach(var chapter in taskMap)
+
+            List<int> keys = new List<int>(taskMap.Keys);
+            foreach(var key in keys)
             {
                 Chapter temp;
-                switch (chapter.Value.state)
+                var chapter = taskMap[key];
+                switch (chapter.state)
                 {
                     case TaskMode.NotStart:     //未开始的任务检查一下可不可以开始
-                        temp = GetChapter(chapter.Value.Name);
+                        temp = GetChapter(chapter.Name);
                         temp.CheckAndLoadChapter();
                         break;
                     case TaskMode.Finish:       //初始化已经完成了的方法
-                        temp = GetChapter(chapter.Value.Name);
+                        temp = GetChapter(chapter.Name);
                         temp.CompleteChapter(temp.RuntimeScene == currentSceneName);
                         break;
                 }
@@ -322,13 +331,12 @@ namespace Task
             if(runtimeTask == null) return;
             for(int i=0; i<runtimeTask.Count; i++)
             {
-                int chapterId = int.Parse(runtimeTask[i].Key),
-                    partId = int.Parse(runtimeTask[i].Value);
+                int chapterId = int.Parse(runtimeTask[i].Key);
                 TaskInfo info = taskMap[chapterId];
                 info.state = TaskMode.Start;
                 taskMap[chapterId] = info;
                 //注册任务进入列表中
-                LoadRuntimeChapter(GetChapter(taskMap[chapterId].Name), partId);
+                LoadRuntimeChapter(GetChapter(taskMap[chapterId].Name), runtimeTask[i].Value);
             }
         }
 
@@ -350,7 +358,7 @@ namespace Task
         /// </summary>
         /// <param name="chapter">章节</param>
         /// <param name="taskId">小节编号</param>
-        private void LoadRuntimeChapter(Chapter chapter, int taskIndex)
+        private void LoadRuntimeChapter(Chapter chapter, string partString)
         {
             if(exectuteTasks == null)
                 exectuteTasks = new List<Chapter>();
@@ -362,7 +370,7 @@ namespace Task
                     return;
                 }
             }
-            chapter.CurrentPartIndex = taskIndex;       //设置章节编号
+            chapter.PartName = partString;       //设置章节编号
             exectuteTasks.Add(chapter);
         }
 

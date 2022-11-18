@@ -123,5 +123,24 @@ namespace Skill
             return false;
         }
 
+        public float GetRunSpeed(Info.CharacterInfo info, float runSpeed)
+        {
+            return runSpeed;
+        }
+
+        public float GetWalkSpeed(Info.CharacterInfo info, float walkSpeed)
+        {
+            return walkSpeed;
+        }
+
+        public int GetAttack(Info.CharacterInfo info, int attack)
+        {
+            return attack;
+        }
+
+        public int GetDefense(Info.CharacterInfo info, int defense)
+        {
+            return defense;
+        }
     }
 }

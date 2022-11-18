@@ -3,11 +3,8 @@ using UnityEngine;
 namespace Common
 {
     /// <summary> /// 池化NPC的标准方式，用来保证该NPC被删除后不会剩下交互 /// </summary>
-    public class NPC_Pooling : ObjectPoolBase
+    public class NPC_Pooling : ObjectPoolingBase
     {
-        protected override void OnEnable()
-        {
-        }
 
         /// <summary> /// 清除多余的交互 /// </summary>
         public override void CloseObject()
@@ -19,6 +16,10 @@ namespace Common
             {
                 Destroy(interactions[i]);
             }
+        }
+
+        public override void OnInitialize()
+        {
         }
     }
 }

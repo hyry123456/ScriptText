@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using UnityEngine;
 
 namespace Task
 {
@@ -25,20 +26,21 @@ namespace Task
 
         public override void ChangeTask()
         {
-            currentPartIndex++;
-            part.ExitTaskEvent(this);       //退出当前任务
-
-            if (currentPartIndex == taskPartCount)     //章节完成
+            part.ExitTaskEvent(this, false);       //退出当前任务
+            //为了确定最后一个结束的任务，当退出时不写入partName
+            string next = part.GetNextPartString();
+            if (next == null)     //章节完成
             {
-                //保存完成的任务
+                //标记为该任务已经完成
                 AsynTaskControl.Instance.CompleteChapter(this);
                 return;
             }
             //未完成就搜索子章节
-            string targetPartStr = targetPart + currentPartIndex.ToString();
+            string targetPartStr = targetPart + next;
             Assembly assembly = Assembly.GetExecutingAssembly();
             part = (ChapterPart)assembly.CreateInstance(targetPartStr);
             part.EnterTaskEvent(this, false);
+            partName = next;
         }
 
         public override void CheckTask(Interaction.InteracteInfo info)
@@ -52,11 +54,12 @@ namespace Task
         /// <summary>        /// 开始章节前先初始化        /// </summary>
         public override void BeginChapter()
         {
-            string targetPartStr = targetPart + '0';
+            partName = "0";
+            //默认第一个子章节名称为：targetPart+0
+            string targetPartStr = targetPart + partName;
             Assembly assembly = Assembly.GetExecutingAssembly();
             part = (ChapterPart)assembly.CreateInstance(targetPartStr);
             part.EnterTaskEvent(this, false);
-            currentPartIndex = 0;
         }
 
         /// <summary>
@@ -65,7 +68,10 @@ namespace Task
         /// </summary>
         public override void ExecuteNowPart()
         {
-            string targetPartStr = targetPart + currentPartIndex.ToString();
+            if(part != null)
+                part.ExitTaskEvent(this, true);
+
+            string targetPartStr = targetPart + partName.ToString();
             Assembly assembly = Assembly.GetExecutingAssembly();
             part = (ChapterPart)assembly.CreateInstance(targetPartStr);
             part.EnterTaskEvent(this, true);

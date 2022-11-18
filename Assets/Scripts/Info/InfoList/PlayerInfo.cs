@@ -6,10 +6,17 @@ namespace Info
 
     public class PlayerInfo : CharacterInfo
     {
-
-
         [SerializeField]
         DefferedRender.PostFXSetting fXSetting;
+
+        private void Awake()
+        {
+            attack = InfoMap.Instance.GetIntData("Attack");
+            defense = InfoMap.Instance.GetIntData("Defense");
+            Common.SceneBeginData beginData = Common.SceneControl.Instance.BeginData;
+            if (!beginData.haveBeginData) return;
+            transform.position = beginData.beginPos;
+        }
 
         protected override void OnEnable()
         {

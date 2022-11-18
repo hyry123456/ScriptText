@@ -12,9 +12,7 @@ namespace Common.ResetInput
         public MyInputValueType valueType;
         //当前这个轴的值
         public float value;
-        /// <summary>
-        /// 这个轴的检测按键，单一时默认检测Up键
-        /// </summary>
+        /// <summary>/// 这个轴的检测按键，单一时默认检测Up键 /// </summary>
         public KeyCode valueUp;
         public KeyCode valueDown;
         /// <summary>

@@ -207,7 +207,7 @@ namespace Motor
             playInput = Vector2.ClampMagnitude(playInput, 1);
             //如果由传入的移动空间就根据这个空间的数值移动，不然就直接用世界坐标移动
             desiredVelocity = Vector3.forward * playInput.x + Vector3.right * playInput.y;
-            desiredVelocity = desiredVelocity * characterInfo.runSpeed;
+            desiredVelocity = desiredVelocity * characterInfo.RunSpeed;
         }
 
         public override void DesireJump()

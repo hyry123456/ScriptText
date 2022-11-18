@@ -13,30 +13,111 @@ namespace Info
         /// <summary>  /// 默认技能，可以不赋予值   /// </summary>
         private string[] defaultSkills;
 
-
         public string characterName;
+
         [SerializeField]
         protected int hp = 10;
-        public int maxHP = 10;
+        [SerializeField]
+        protected int maxHP = 10;
+        [SerializeField]
+        protected int maxSolidRadio = 10;
+        [SerializeField]
+        protected int solidRadio;
+
+        [SerializeField]
         /// <summary>        /// 跑步速度        /// </summary>
-        public float runSpeed = 10;
+        protected float runSpeed = 10;
+        [SerializeField]
         /// <summary>        /// 行走速度        /// </summary>
-        public float walkSpeed = 5;
-        public float rotateSpeed = 10;
+        protected float walkSpeed = 5;
+        [SerializeField]
+        protected float rotateSpeed = 10;
+
+        [SerializeField]
+        protected int attack = 1;
+        [SerializeField]
+        protected int defense = 1;
+
+
         /// <summary>   /// 该人物可攻击到的敌人层，以及可遮挡层     /// </summary>
         public LayerMask attackLayer;
-        [SerializeField]
-        private int maxSolidRadio = 10;
-        [SerializeField]
-        private int solidRadio;
-
-        /// <summary>   /// 敌人最大坚硬值    /// </summary>
-        public int MaxSolidRadio => maxSolidRadio;
-        public int SolidRadio => solidRadio;
         public void SetSolidRadio(int solid)
         {
             solidRadio = solid;
         }
+
+        //获取数据的一些列方法
+        #region GetData
+        /// <summary>  /// 跑步速度   /// </summary>
+        public float RunSpeed
+        {
+            get
+            {
+                float speed = runSpeed;
+                for(int i=0; i<states.Count; i++)
+                {
+                    speed = states.GetValue(i).GetRunSpeed(this, speed);
+                }
+                return speed;
+            }
+        }
+        /// <summary>  /// 移动速度   /// </summary>
+        public float WalkSpeed
+        {
+            get
+            {
+                float speed = walkSpeed;
+                for (int i = 0; i < states.Count; i++)
+                {
+                    speed = states.GetValue(i).GetWalkSpeed(this, speed);
+                }
+                return speed;
+            }
+        /// <summary>  /// 旋转速度   /// </summary>
+        }
+        /// <summary>  /// 旋转速度   /// </summary>
+        public float RotateSpeed
+        {
+            get
+            {
+                //旋转速度不进行调整
+                return rotateSpeed;
+            }
+        }
+        /// <summary>    /// 角色当前攻击力    /// </summary>
+        public int Attack
+        {
+            get
+            {
+                int att = attack;
+                for (int i = 0; i < states.Count; i++)
+                {
+                    att = states.GetValue(i).GetAttack(this, att);
+                }
+                return att;
+            }
+        }
+        /// <summary>    /// 角色当前防御力    /// </summary>
+        public int Defense
+        {
+            get
+            {
+                int def = defense;
+                for (int i = 0; i < states.Count; i++)
+                {
+                    def = states.GetValue(i).GetDefense(this, def);
+                }
+                return def;
+            }
+        /// <summary>    /// 角色当前攻击力    /// </summary>
+        }
+
+        /// <summary>   /// 敌人最大坚硬值    /// </summary>
+        public int MaxSolidRadio => maxSolidRadio;
+        public int SolidRadio => solidRadio;
+
+        #endregion
+
 
         /// <summary>        /// 判断角色是否死亡        /// </summary>
         public bool isDie => hp <= 0;
@@ -44,7 +125,6 @@ namespace Info
         protected PoolingList<CharacterState> states = new PoolingList<CharacterState>();
 
         private ExternalAction externalActions;
-
 
         /// <summary>        /// 初始化方法        /// </summary>
 

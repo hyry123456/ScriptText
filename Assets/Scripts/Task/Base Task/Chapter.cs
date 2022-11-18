@@ -19,27 +19,19 @@ namespace Task
         /// <summary>        /// 章节描述        /// </summary>
         public string ChapterDescription => chapterDescription;
 
-        /// <summary>        /// 子章节数量        /// </summary>
-        protected int taskPartCount;
-        /// <summary>        /// 子章节数量        /// </summary>
-        public int TaskPartCount => taskPartCount;
 
-        /// <summary>        /// 当前子章节        /// </summary>
+        protected string partName;
+        /// <summary>/// 目标加载的子章节后缀/// </summary>
+        public string PartName
+        {
+            set => partName = value;
+            get => partName;
+        }
+
         protected ChapterPart part;
         /// <summary>        /// 当前子章节        /// </summary>
         public ChapterPart Part => part;
 
-        protected int currentPartIndex;
-        public int CurrentPartIndex
-        {
-            get => currentPartIndex;
-            set
-            {
-                currentPartIndex = value;
-            }
-        }
-
-        /// <summary>        /// 章节编号        /// </summary>
         protected int chapterID;
         /// <summary>        /// 章节编号        /// </summary>
         public int ChapterID => chapterID;

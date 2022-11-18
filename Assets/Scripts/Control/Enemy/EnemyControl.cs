@@ -7,7 +7,7 @@ namespace Control
     /// <summary>
     /// 一个简单的敌人AI
     /// </summary>
-    public class EnemyControl : ObjectPoolBase
+    public class EnemyControl : ObjectPoolingBase
     {
         Transform player;
         Motor.EnemyMotor motor;
@@ -92,7 +92,7 @@ namespace Control
             }
         }
 
-        protected override void OnEnable()
+        public override void OnInitialize()
         {
             time = 0;
         }

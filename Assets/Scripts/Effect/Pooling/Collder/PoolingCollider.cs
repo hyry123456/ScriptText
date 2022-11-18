@@ -5,16 +5,11 @@ namespace Common
     public delegate void CollisionEnterEvent(Collider collider);
 
     /// <summary> /// 池化的球形碰撞体   /// </summary>
-    class PoolingSphere : ObjectPoolBase
+    class PoolingSphere : ObjectPoolingBase
     {
         private CollisionEnterEvent enterEvent;
         protected SphereCollider sphere;
 
-        protected override void OnEnable()
-        {
-            if (sphere == null)
-                sphere = GetComponent<SphereCollider>();
-        }
 
         /// <summary>  /// 初始化球体碰撞器，不控制坐标，因为坐标由外部控制     /// </summary>
         /// <param name="radius">球体角度</param>
@@ -41,19 +36,20 @@ namespace Common
             base.CloseObject();
             enterEvent = null;      //清除事件
         }
+
+        public override void OnInitialize()
+        {
+            if (sphere == null)
+                sphere = GetComponent<SphereCollider>();
+        }
     }
 
     /// <summary>  /// 池化的方形碰撞体 /// </summary>
-    class PoolingBox : ObjectPoolBase
+    class PoolingBox : ObjectPoolingBase
     {
         private CollisionEnterEvent enterEvent;
         protected BoxCollider box;
 
-        protected override void OnEnable()
-        {
-            if (box == null)
-                box = GetComponent<BoxCollider>();
-        }
 
         /// <summary>  
         /// 初始化盒子碰撞器，不控制坐标以及角度，由外部控制
@@ -76,6 +72,12 @@ namespace Common
         {
             base.CloseObject();
             enterEvent = null;      //清除事件
+        }
+
+        public override void OnInitialize()
+        {
+            if (box == null)
+                box = GetComponent<BoxCollider>();
         }
     }
 

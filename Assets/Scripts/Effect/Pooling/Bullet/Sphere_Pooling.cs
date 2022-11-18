@@ -6,11 +6,8 @@ using UnityEngine;
 /// 一个池化的球体，可以是其他物体，该物体只有一个方法，就是碰撞后会爆炸，
 /// 以及提供一个具有碰撞参数的方法，表示碰撞后执行的时间
 /// </summary>
-public class Sphere_Pooling : ObjectPoolBase
+public class Sphere_Pooling : ObjectPoolingBase
 {
-    protected override void OnEnable()
-    {
-    }
     public delegate void CollsionEnter(Collision collision);
     public CollsionEnter collsionEnter;
     ParticleDrawData drawData;
@@ -93,5 +90,9 @@ public class Sphere_Pooling : ObjectPoolBase
         drawData.speedMode = SpeedMode.JustBeginSpeed;
         CloseObject();
 
+    }
+
+    public override void OnInitialize()
+    {
     }
 }

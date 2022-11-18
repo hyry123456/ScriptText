@@ -15,11 +15,12 @@ namespace DefferedRender
         [Range(0.25f, 1f)]
         public float renderScale;          //渲染缩放
 
+        public bool isDebug;        //开启DebugPass
+
         [RenderingLayerMaskField]
         public int renderingLayerMask;
 
         public Shader cameraShader;
-
 
         public FogSetting fogSetting;
     }

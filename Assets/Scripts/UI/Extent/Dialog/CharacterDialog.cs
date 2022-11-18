@@ -9,7 +9,7 @@ namespace UI
     /// <summary>
     /// 角色对话款，也就是显示在角色头上的对话框
     /// </summary>
-    public class CharacterDialog : ObjectPoolBase
+    public class CharacterDialog : ObjectPoolingBase
     {
         //回调方法
         private INonReturnAndNonParam recall;
@@ -31,11 +31,6 @@ namespace UI
         Text textUI;
 
         private float nowWaitTime = 0;
-
-        protected override void OnEnable()
-        {
-            recall = null;
-        }
 
 
         public void BeginDialog(string dialogs, INonReturnAndNonParam recall)
@@ -127,6 +122,11 @@ namespace UI
             base.CloseObject();
             if (recall != null) recall();
             textUI.text = "";       //清除现有数据
+        }
+
+        public override void OnInitialize()
+        {
+            recall = null;
         }
     }
 }

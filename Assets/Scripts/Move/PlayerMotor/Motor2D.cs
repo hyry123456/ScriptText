@@ -100,7 +100,7 @@ namespace Motor
                 desiredVelocity = playerInputSpace.forward * playInput.x + playerInputSpace.right * playInput.y;
             else
                 desiredVelocity = Vector3.forward * playInput.x + Vector3.right * playInput.y;
-            desiredVelocity = desiredVelocity * characterInfo.runSpeed;
+            desiredVelocity = desiredVelocity * characterInfo.RunSpeed;
         }
 
         public override void DesireJump()

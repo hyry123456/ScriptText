@@ -18,9 +18,15 @@ MonoBehaviour:
   - RuntimeTask
   - AllPackages
   - ObtainPackages
+  - PlayerData
+  - ScenePrefix
+  - SceneData
   paths:
   - /Task/AllTask.task
   - /Task/CompleteTask.task
   - /Task/RuntimeTask.task
   - /Packages/AllPackages.package
   - /Packages/ObtainPackages.package
+  - /PlayerData/PlayerData.info
+  - /Scene/
+  - /Scene/SaveSceneData.scene

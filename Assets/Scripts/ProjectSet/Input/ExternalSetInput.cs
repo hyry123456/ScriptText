@@ -19,27 +19,27 @@ namespace Common.ResetInput
 
         private void FixedUpdate()
         {
-            inputValues = new InputValueOutReadStruct[MyInput.Instance.myInputValues.Length];
-            for (int i = 0; i < MyInput.Instance.myInputValues.Length; i++)
+            inputValues = new InputValueOutReadStruct[MyInput.Instance.MyInputValues.Length];
+            for (int i = 0; i < MyInput.Instance.MyInputValues.Length; i++)
             {
-                string keyCode = MyInput.Instance.myInputValues[i].valueDown.ToString();
+                string keyCode = MyInput.Instance.MyInputValues[i].valueDown.ToString();
                 //赋值对应轴的值
                 if (keyCode[0] >= '0' && keyCode[0] <= '9')
-                    inputValues[i].valueDown = ((char)MyInput.Instance.myInputValues[i].valueDown).ToString();
+                    inputValues[i].valueDown = ((char)MyInput.Instance.MyInputValues[i].valueDown).ToString();
                 else inputValues[i].valueDown = keyCode;
 
-                keyCode = MyInput.Instance.myInputValues[i].valueUp.ToString();
+                keyCode = MyInput.Instance.MyInputValues[i].valueUp.ToString();
                 if (keyCode[0] >= '0' && keyCode[0] <= '9')
-                    inputValues[i].valueUp = ((char)MyInput.Instance.myInputValues[i].valueUp).ToString();
+                    inputValues[i].valueUp = ((char)MyInput.Instance.MyInputValues[i].valueUp).ToString();
                 else inputValues[i].valueUp = keyCode;
 
-                inputValues[i].valueType = MyInput.Instance.myInputValues[i].valueType;
-                inputValues[i].changeSpeed = MyInput.Instance.myInputValues[i].changeSpeed;
-                inputValues[i].asisName = MyInput.Instance.myInputValues[i].asisName;
+                inputValues[i].valueType = MyInput.Instance.MyInputValues[i].valueType;
+                inputValues[i].changeSpeed = MyInput.Instance.MyInputValues[i].changeSpeed;
+                inputValues[i].asisName = MyInput.Instance.MyInputValues[i].asisName;
 
-                inputValues[i].value = MyInput.Instance.myInputValues[i].value;
-                inputValues[i].forValue = MyInput.Instance.myInputValues[i].forValue;
-                inputValues[i].forValueIsChange = MyInput.Instance.myInputValues[i].forValueIsChange;
+                inputValues[i].value = MyInput.Instance.MyInputValues[i].value;
+                inputValues[i].forValue = MyInput.Instance.MyInputValues[i].forValue;
+                inputValues[i].forValueIsChange = MyInput.Instance.MyInputValues[i].forValueIsChange;
             }
         }
 

@@ -21,5 +21,4 @@ namespace Common
     /// <typeparam name="T">传入的数据的类型</typeparam>
     /// <param name="inValue">传入的数据</param>
     public delegate void ISetOneParam<T>(T inValue);
-
 }
