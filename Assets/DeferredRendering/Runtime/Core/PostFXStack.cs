@@ -78,6 +78,7 @@ namespace DefferedRender
 			bulkLightSampleCountId = Shader.PropertyToID("_BulkSampleCount"),
 			bulkLightScatterRadioId = Shader.PropertyToID("_BulkLightScatterRadio"),
 			bulkLightCheckMaxDistanceId = Shader.PropertyToID("_BulkLightCheckMaxDistance"),
+			bufferSizeId = Shader.PropertyToID("_CameraBufferSize"),
 
 
 			finalTempTexId = Shader.PropertyToID("_FinalTempTexure"),
@@ -333,7 +334,10 @@ namespace DefferedRender
 				bulkLightTargetTexId, RenderBufferLoadAction.Load, RenderBufferStoreAction.Store,
 				bulkLightDepthTexId, RenderBufferLoadAction.Load, RenderBufferStoreAction.Store);
 
-            BulkLight.Instance.DrawBulkLight(buffer);
+			buffer.SetGlobalVector(bufferSizeId, new Vector4(
+				1f / width, 1f / height, width, height));
+
+			BulkLight.Instance.DrawBulkLight(buffer);
 
 			buffer.ReleaseTemporaryRT(bulkLightDepthTexId);
 
@@ -352,6 +356,8 @@ namespace DefferedRender
 			buffer.ReleaseTemporaryRT(bulkLightTempTexId);
 			buffer.ReleaseTemporaryRT(bulkLightTargetTexId);
 
+			buffer.SetGlobalVector(bufferSizeId, new Vector4(
+				1f / this.width, 1f / this.height, this.width, this.height));
 			buffer.EndSample("BulkLight");
 			ExecuteBuffer();
 		}

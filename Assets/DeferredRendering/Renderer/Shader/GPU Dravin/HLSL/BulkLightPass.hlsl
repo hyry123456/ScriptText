@@ -7,7 +7,7 @@ struct BulkLightStruct
 	float3 boundMax;
 	float3 boundMin;
 	/// <summary>  /// 灯光编号，最多一个体积块中支持4个灯光   /// </summary>
-	float4 lightIndex;
+	// float4 lightIndex;
 };
 
 #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
@@ -35,7 +35,6 @@ struct FragmentInput{
     //用W轴存储Box的距离
     float4 positionWS : VAR_POSITION;
     uint mode : VAR_MODE;       //0为外部看内部，1为内部开始看
-    float4 lightIndex : VAR_LIGHTING;
     float3 boxMax : VAR_BOXMAX;
     float3 boxMin : VAR_BOXMIN;
 };
@@ -57,7 +56,7 @@ void geom(point GemoInput IN[1], inout TriangleStream<FragmentInput> tristream)
 	bounds[1] = float3(bulk.boundMax.x, bulk.boundMin.y, bulk.boundMin.z);
 	bounds[2] = float3(bulk.boundMax.x, bulk.boundMin.y, bulk.boundMax.z);
 	bounds[3] = float3(bulk.boundMin.x, bulk.boundMin.y, bulk.boundMax.z);
-    
+
 	bounds[4] = float3(bulk.boundMin.x, bulk.boundMax.y, bulk.boundMin.z);
 	bounds[5] = float3(bulk.boundMax.x, bulk.boundMax.y, bulk.boundMin.z);
 	bounds[6] = float3(bulk.boundMax.x, bulk.boundMax.y, bulk.boundMax.z);
@@ -66,7 +65,7 @@ void geom(point GemoInput IN[1], inout TriangleStream<FragmentInput> tristream)
     int mode;
 
     //判断灯光方向
-    if(_WorldSpaceCameraPos.x > bulk.boundMax.x || _WorldSpaceCameraPos.x < bulk.boundMin.x 
+    if(_WorldSpaceCameraPos.x > bulk.boundMax.x || _WorldSpaceCameraPos.x < bulk.boundMin.x
         || _WorldSpaceCameraPos.y > bulk.boundMax.y || _WorldSpaceCameraPos.y < bulk.boundMin.y
         || _WorldSpaceCameraPos.z > bulk.boundMax.z || _WorldSpaceCameraPos.z < bulk.boundMin.z){
             mode = 0;       //在外部
@@ -81,13 +80,12 @@ void geom(point GemoInput IN[1], inout TriangleStream<FragmentInput> tristream)
         frags[i].positionCS = mul(UNITY_MATRIX_VP, float4(bounds[i], 1));
         frags[i].positionWS = float4( bounds[i], dis);
         frags[i].mode = mode;
-        frags[i].lightIndex = bulk.lightIndex;
         frags[i].boxMax = bulk.boundMax;
         frags[i].boxMin = bulk.boundMin;
     }
 
     float3 camToCenter, centerDir, center;
-    float3 midPos = float3((bulk.boundMax.x + bulk.boundMin.x) / 2, 
+    float3 midPos = float3((bulk.boundMax.x + bulk.boundMin.x) / 2,
         (bulk.boundMax.y + bulk.boundMin.y) / 2, (bulk.boundMax.z + bulk.boundMin.z) / 2);
 
     center = float3(midPos.x, midPos.y, bulk.boundMin.z);
@@ -183,15 +181,61 @@ void geom(point GemoInput IN[1], inout TriangleStream<FragmentInput> tristream)
 // }
 
 //获得体积光的光照计算方式
-float3 GetStaticBulkLighting(float3 worldPos, float3 viewDirection, float2 screenUV, float scatterRadio, float4 lightIndex){
+// float3 GetStaticBulkLighting(float3 worldPos, float3 viewDirection, float2 screenUV, float scatterRadio, float4 lightIndex){
+// 	ShadowData shadowData = GetShadowDataByPosition(worldPos);
+
+// 	float3 color = 0;
+//     for (int i = 0; i < 4 && lightIndex[i] >= 0; i++) {
+//         Light light = GetOtherLightByPosition(lightIndex[i], worldPos, shadowData);
+//         color += BulkIncomingLight(light, viewDirection, scatterRadio);
+//     }
+
+// 	return color;
+// }
+
+float3 GetStaticBulkLighting(float3 worldPos, float3 viewDirection, float3 uv_Depth, float scatterRadio){
 	ShadowData shadowData = GetShadowDataByPosition(worldPos);
 
 	float3 color = 0;
-    for (int i = 0; i < 4 && lightIndex[i] >= 0; i++) {
-        Light light = GetOtherLightByPosition(lightIndex[i], worldPos, shadowData);
-        color += BulkIncomingLight(light, viewDirection, scatterRadio);
-    }
 
+#ifdef _USE_CLUSTER
+	uint id = Get1DCluster(uv_Depth.xy, uv_Depth.z);
+	int count = _ClusterCountBuffer[id];
+	LightArray array = _ClusterArrayBuffer[id];
+
+	for (int j = 0; j < count; j++) {
+		Light light = GetOtherLightByPosition(array.lightIndex[j], worldPos, shadowData);
+		color += BulkIncomingLight(light, viewDirection, scatterRadio);
+	}
+
+#else
+	for (int j = 0; j < GetOtherLightCount(); j++) {
+		Light light = GetOtherLightByPosition(j, worldPos, shadowData);
+		color += BulkIncomingLight(light, viewDirection, scatterRadio);
+	}
+#endif
+	return color;
+}
+
+float3 GetStaticBulkLighting(float3 worldPos, float3 viewDirection, float4 clipPos, float scatterRadio){
+	ShadowData shadowData = GetShadowDataByPosition(worldPos);
+
+	float3 color = 0;
+#ifdef _USE_CLUSTER
+	uint id = Get1DCluster(clipPos.xy / _CameraBufferSize.xy, clipPos.w);
+	int count = min(_ClusterCountBuffer[id], GetOtherLightCount());
+	LightArray array = _ClusterArrayBuffer[id];
+
+	for (int j = 0; j < count; j++) {
+		Light light = GetOtherLightByPosition(array.lightIndex[j], worldPos, shadowData);
+		color += BulkIncomingLight(light, viewDirection, scatterRadio);
+	}
+#else
+	for (int j = 0; j < GetOtherLightCount(); j++) {
+		Light light = GetOtherLightByPosition(j, worldPos, shadowData);
+		color += BulkIncomingLight(light, viewDirection, scatterRadio);
+	}
+#endif
 	return color;
 }
 
@@ -207,14 +251,15 @@ bool CheckOutBox(int mode, float maxV, float minV, float value){
 }
 
 //外部观看体积光时的处理函数
-float3 GetBulkLight(float4 worldPos, float2 screenUV, float4 lightIndex, float3 boxMax, float3 boxMin, float3 direction){
-
-
+float3 GetBulkLight(float4 worldPos, float4 positionCS, float3 boxMax, float3 boxMin, float3 direction){
     float perNodeLength = worldPos.w / _BulkSampleCount;
     float3 currentPoint = worldPos.xyz;
     float3 viewDirection = -direction;
 
     float3 color = 0;
+    float2 screenUV = positionCS.xy * _CameraBufferSize.xy;
+    float3 uv_Depth = float3(screenUV, positionCS.w);
+    
     float seed = random((screenUV.y + screenUV.x) * _ScreenParams.x * _ScreenParams.y + 0.2312312) * 0.5 + 0.5;
 
     int3 mode3;
@@ -222,9 +267,11 @@ float3 GetBulkLight(float4 worldPos, float2 screenUV, float4 lightIndex, float3 
     mode3.y = (direction.y > 0)? 1 : 0;
     mode3.z = (direction.z > 0)? 1 : 0;
 
+
     int i = 0;
     for(; i < _BulkSampleCount; i++){
         currentPoint += direction * perNodeLength;
+        uv_Depth.z += perNodeLength;
         if(CheckOutBox(mode3.x, boxMax.x, boxMin.x, currentPoint.x))
             break;
         if(CheckOutBox(mode3.y, boxMax.y, boxMin.y, currentPoint.y))
@@ -233,7 +280,8 @@ float3 GetBulkLight(float4 worldPos, float2 screenUV, float4 lightIndex, float3 
             break;
 
         float3 tempPosition = lerp(currentPoint, currentPoint + direction * perNodeLength, seed);
-        color += GetStaticBulkLighting(tempPosition, viewDirection, screenUV, _BulkLightScatterRadio, lightIndex);
+        float3 tempUV_Depth = lerp(uv_Depth, uv_Depth + float3(0, 0, perNodeLength), seed);
+        color += GetStaticBulkLighting(tempPosition, viewDirection, tempUV_Depth, _BulkLightScatterRadio);
     }
     color *= i * perNodeLength * _BulkLightShrinkRadio;
 
@@ -241,15 +289,18 @@ float3 GetBulkLight(float4 worldPos, float2 screenUV, float4 lightIndex, float3 
 }
 
 
-float3 GetBulkLightOutside(float3 worldPos, float2 screenUV, float4 lightIndex, float3 boxMax, float3 boxMin, float3 direction){
-    
-    float perNodeLength = distance(worldPos, _WorldSpaceCameraPos) / _BulkSampleCount;
+//从内部开始看
+float3 GetBulkLightInside(float4 worldPos, float4 positionCS, float3 boxMax, float3 boxMin, float3 direction){
+    float perNodeLength = worldPos.w / _BulkSampleCount;
+    // float4 trueClipPos = float4(positionCS.xyz, _ZBufferParams.y / _ZBufferParams.z);
     float3 currentPoint = _WorldSpaceCameraPos;
     float3 viewDirection = -direction;
 
     float3 color = 0;
+    float2 screenUV = positionCS.xy * _CameraBufferSize.xy;
+    float3 uv_Depth = float3(screenUV, _ZBufferParams.y / _ZBufferParams.z);
+
     float seed = random((screenUV.y + screenUV.x) * _ScreenParams.x * _ScreenParams.y + 0.2312312);
-    // float seed = Perlin2DFBM(screenUV, 8);
 
     int3 mode3;
     mode3.x = (direction.x > 0)? 1 : 0;     //1为判断x的大
@@ -259,6 +310,7 @@ float3 GetBulkLightOutside(float3 worldPos, float2 screenUV, float4 lightIndex, 
     int i = 0;
     for(; i < _BulkSampleCount; i++){
         currentPoint += direction * perNodeLength;
+        uv_Depth.z += perNodeLength;
         if(CheckOutBox(mode3.x, boxMax.x, boxMin.x, currentPoint.x))
             break;
         if(CheckOutBox(mode3.y, boxMax.y, boxMin.y, currentPoint.y))
@@ -267,7 +319,8 @@ float3 GetBulkLightOutside(float3 worldPos, float2 screenUV, float4 lightIndex, 
             break;
 
         float3 tempPosition = lerp(currentPoint, currentPoint + direction * perNodeLength, seed);
-        color += GetStaticBulkLighting(tempPosition, viewDirection, screenUV, _BulkLightScatterRadio, lightIndex);
+        float3 tempUV_Depth = lerp(uv_Depth, uv_Depth + float3(0, 0, perNodeLength), seed);
+        color += GetStaticBulkLighting(tempPosition, viewDirection, tempUV_Depth, _BulkLightScatterRadio);
     }
     color *= i * perNodeLength * _BulkLightShrinkRadio;
 
@@ -278,15 +331,15 @@ float3 GetBulkLightOutside(float3 worldPos, float2 screenUV, float4 lightIndex, 
 
 float4 frag(FragmentInput input) : SV_TARGET{
     float3 direction = normalize(input.positionWS.xyz - _WorldSpaceCameraPos);
+
     switch (input.mode){
-        case 0:     //外部，从边界开始
-            return float4(GetBulkLight(input.positionWS, input.positionCS.xy, 
-                input.lightIndex, input.boxMax, input.boxMin, direction), 1);
+        case 0:     //外部，从边界开始GetBulkLight
+            return float4(GetBulkLight(input.positionWS, input.positionCS,
+                input.boxMax, input.boxMin, direction), 1);
         default:    //内部，从摄像机开始
-            return float4(GetBulkLightOutside(input.positionWS.xyz, input.positionCS.xy, 
-                input.lightIndex, input.boxMax, input.boxMin, direction), 1);
+            return float4(GetBulkLightInside(input.positionWS, input.positionCS,
+                input.boxMax, input.boxMin, direction), 1);
     }
-    // return float4(GetBulkLight(input.positionWS, input.positionCS.xy * _CameraBufferSize.xy, input.lightIndex, input.boxMax, input.boxMin), 1);
     return 1;
 }
 

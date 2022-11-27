@@ -104,7 +104,7 @@ namespace UI
             image.gameObject.SetActive(false);
             Color color = image.color; color.a = 0.3f;
             image.color = color;
-            images.Remove(0);
+            images.RemoveIndex(0);
         }
 
         void GetOne()

@@ -70,7 +70,7 @@ namespace UI
             {
                 UITaskButton button = buttons.GetValue(0);
                 button.CloseObject();
-                buttons.Remove(0);
+                buttons.RemoveIndex(0);
             }
             chapterDescription.text = "";
             partDescription.text = "";

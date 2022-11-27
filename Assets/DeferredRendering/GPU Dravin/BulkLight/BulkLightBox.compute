@@ -11,7 +11,6 @@ struct BulkLightStruct
 {
 	float3 boundMax;
 	float3 boundMin;
-	float4 lightIndex;
 };
 
 
@@ -45,58 +44,58 @@ bool CheckPositionInLight(float3 pos, int lightIndex) {
 
 
 
-#pragma kernel CaculateBulkBox
-
-[numthreads(64, 1, 1)]
-void CaculateBulkBox(ComputeShaderInput input){
-	if(input.DispatchThreadID.x > (uint)_BoxCount)
-		return;
-
-	BulkLightStruct bulk = _ClusterDataBuffer[input.DispatchThreadID.x];
-	float3 bounds[8];
-	bounds[0] = float3(bulk.boundMax.x, bulk.boundMax.y, bulk.boundMax.z);
-	bounds[1] = float3(bulk.boundMin.x, bulk.boundMax.y, bulk.boundMax.z);
-	bounds[2] = float3(bulk.boundMax.x, bulk.boundMin.y, bulk.boundMax.z);
-	bounds[3] = float3(bulk.boundMax.x, bulk.boundMax.y, bulk.boundMin.z);
-	bounds[4] = float3(bulk.boundMin.x, bulk.boundMin.y, bulk.boundMax.z);
-	bounds[5] = float3(bulk.boundMin.x, bulk.boundMax.y, bulk.boundMin.z);
-	bounds[6] = float3(bulk.boundMax.x, bulk.boundMin.y, bulk.boundMin.z);
-	bounds[7] = float3(bulk.boundMin.x, bulk.boundMin.y, bulk.boundMin.z);
-
-
-	int size = 0;
-	bulk.lightIndex = -1;
-	for(int i = 0; i < _OtherLightCount; i++){
-		if(CheckPositionInLight(bounds[0], i)
-			|| CheckPositionInLight(bounds[1], i)
-			|| CheckPositionInLight(bounds[2], i)
-			|| CheckPositionInLight(bounds[3], i)
-			|| CheckPositionInLight(bounds[4], i)
-			|| CheckPositionInLight(bounds[5], i)
-			|| CheckPositionInLight(bounds[6], i)
-			|| CheckPositionInLight(bounds[7], i))
-		{
-			switch(size){
-				case 0:
-					bulk.lightIndex[0] = i;
-					break;
-				case 1:
-					bulk.lightIndex[1] = i;
-					break;
-				case 2:
-					bulk.lightIndex[2] = i;
-					break;
-				default:
-					bulk.lightIndex[3] = i;
-					i = 65;
-					break;
-			}
-			size++;
-		}
-	}
-
-
-	_ClusterDataBuffer[input.DispatchThreadID.x] = bulk;
-
-
-}
+//#pragma kernel CaculateBulkBox
+//
+//[numthreads(64, 1, 1)]
+//void CaculateBulkBox(ComputeShaderInput input){
+//	if(input.DispatchThreadID.x > (uint)_BoxCount)
+//		return;
+//
+//	BulkLightStruct bulk = _ClusterDataBuffer[input.DispatchThreadID.x];
+//	float3 bounds[8];
+//	bounds[0] = float3(bulk.boundMax.x, bulk.boundMax.y, bulk.boundMax.z);
+//	bounds[1] = float3(bulk.boundMin.x, bulk.boundMax.y, bulk.boundMax.z);
+//	bounds[2] = float3(bulk.boundMax.x, bulk.boundMin.y, bulk.boundMax.z);
+//	bounds[3] = float3(bulk.boundMax.x, bulk.boundMax.y, bulk.boundMin.z);
+//	bounds[4] = float3(bulk.boundMin.x, bulk.boundMin.y, bulk.boundMax.z);
+//	bounds[5] = float3(bulk.boundMin.x, bulk.boundMax.y, bulk.boundMin.z);
+//	bounds[6] = float3(bulk.boundMax.x, bulk.boundMin.y, bulk.boundMin.z);
+//	bounds[7] = float3(bulk.boundMin.x, bulk.boundMin.y, bulk.boundMin.z);
+//
+//
+//	int size = 0;
+//	bulk.lightIndex = -1;
+//	for(int i = 0; i < _OtherLightCount; i++){
+//		if(CheckPositionInLight(bounds[0], i)
+//			|| CheckPositionInLight(bounds[1], i)
+//			|| CheckPositionInLight(bounds[2], i)
+//			|| CheckPositionInLight(bounds[3], i)
+//			|| CheckPositionInLight(bounds[4], i)
+//			|| CheckPositionInLight(bounds[5], i)
+//			|| CheckPositionInLight(bounds[6], i)
+//			|| CheckPositionInLight(bounds[7], i))
+//		{
+//			switch(size){
+//				case 0:
+//					bulk.lightIndex[0] = i;
+//					break;
+//				case 1:
+//					bulk.lightIndex[1] = i;
+//					break;
+//				case 2:
+//					bulk.lightIndex[2] = i;
+//					break;
+//				default:
+//					bulk.lightIndex[3] = i;
+//					i = 65;
+//					break;
+//			}
+//			size++;
+//		}
+//	}
+//
+//
+//	_ClusterDataBuffer[input.DispatchThreadID.x] = bulk;
+//
+//
+//}

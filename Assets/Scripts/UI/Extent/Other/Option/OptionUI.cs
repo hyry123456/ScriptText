@@ -30,7 +30,7 @@ namespace UI
             while(optionBars.Count > 0)
             {
                 optionBars.GetValue(0).CloseObject();
-                optionBars.Remove(0);
+                optionBars.RemoveIndex(0);
             }
         }
 
@@ -77,7 +77,7 @@ namespace UI
             while (optionBars.Count > 0)
             {
                 optionBars.GetValue(0).CloseObject();
-                optionBars.Remove(0);
+                optionBars.RemoveIndex(0);
             }
         }
     }

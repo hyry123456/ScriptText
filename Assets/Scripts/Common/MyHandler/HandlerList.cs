@@ -21,4 +21,16 @@ namespace Common
     /// <typeparam name="T">传入的数据的类型</typeparam>
     /// <param name="inValue">传入的数据</param>
     public delegate void ISetOneParam<T>(T inValue);
+
+    [System.Serializable]
+    public struct Pair<T1, T2>
+    {
+        public T1 Key;
+        public T2 Value;
+        public Pair(T1 key, T2 value)
+        {
+            Key = key;
+            Value = value;
+        }
+    }
 }

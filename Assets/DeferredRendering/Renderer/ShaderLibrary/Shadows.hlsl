@@ -195,9 +195,7 @@ float GetDirectionalShadowAttenuation (
 ) {
 	float shadow;
 	shadow = GetCascadedShadow(directional, global, surfaceWS);
-	// return lerp(1.0, shadow, directional.strength);
 	return lerp(1.0, shadow, directional.strength * global.strength);
-	// return shadow;
 }
 
 struct OtherShadowData {

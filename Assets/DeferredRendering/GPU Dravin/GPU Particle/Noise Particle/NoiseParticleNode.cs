@@ -51,6 +51,13 @@ namespace DefferedRender
         float time = 0; 
         [SerializeField]
         int index = 0;
+        [SerializeField]
+        bool isAutoPlay;
+        public bool IsAutoPlay
+        {
+            get { return isAutoPlay; }
+            set { isAutoPlay = value; }
+        }
 
         private void Start()
         {
@@ -90,25 +97,27 @@ namespace DefferedRender
         private void Update()
         {
             if (!isInsert) return;  //没有插入渲染栈就退出
-
-            time += Time.deltaTime;
-            if (time > noiseData.releaseTime * 0.9f)
+            if (IsAutoPlay)
             {
-                time = 0;
-                for(int i = 0; i<perReleaseGroup; i++)
+                time += Time.deltaTime;
+                if (time > noiseData.releaseTime * 0.9f)
                 {
-                    //到时间就拷贝数据
-                    if (groups[index].dieTime < Time.time)
+                    time = 0;
+                    for (int i = 0; i < perReleaseGroup; i++)
                     {
-                        groups[index].dieTime = Time.time + noiseData.releaseTime + noiseData.liveTime;
-                        groupBuffer.SetData(groups, index, index, 1);
-                        index++;
-                        index %= groupCount;
+                        //到时间就拷贝数据
+                        if (groups[index].dieTime < Time.time)
+                        {
+                            groups[index].dieTime = Time.time + noiseData.releaseTime + noiseData.liveTime;
+                            groupBuffer.SetData(groups, index, index, 1);
+                            index++;
+                            index %= groupCount;
+                        }
+                        else
+                            break;
                     }
-                    else
-                        break;
-                }
 
+                }
             }
             SetOnCompute();
             compute.Dispatch(kernel_Perframe, groupCount, 1, 1);
@@ -302,6 +311,23 @@ namespace DefferedRender
 
         public override void SetUp(ScriptableRenderContext context, CommandBuffer buffer, Camera camera)
         {
+        }
+
+        public void ReleaseOneCount()
+        {
+            for (int i = 0; i < perReleaseGroup; i++)
+            {
+                //到时间就拷贝数据
+                if (groups[index].dieTime < Time.time)
+                {
+                    groups[index].dieTime = Time.time + noiseData.releaseTime + noiseData.liveTime;
+                    groupBuffer.SetData(groups, index, index, 1);
+                    index++;
+                    index %= groupCount;
+                }
+                else
+                    break;
+            }
         }
     }
 }

@@ -95,7 +95,7 @@ namespace Skill
             while(actions.Count > 0)
             {
                 Info.ActionData action = actions.GetValue(0);
-                actions.Remove(0);
+                actions.RemoveIndex(0);
                 defense += action.hp;
                 //护盾破碎，直接死亡
                 if(defense < 0)

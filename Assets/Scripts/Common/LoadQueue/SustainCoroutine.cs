@@ -11,8 +11,19 @@ namespace Common
     /// </summary>
     class SustainList<T>
     {
-        public T[] coroutines = new T[1];
-        public int size = 0;
+
+        public T[] coroutines;
+        public int size;
+        public SustainList(int capcity)
+        {
+            coroutines = new T[capcity];
+            size = 0;
+        }
+        public SustainList()
+        {
+            coroutines = new T[1];
+            size = 0;
+        }
 
         public void Add(T coroutine)
         {

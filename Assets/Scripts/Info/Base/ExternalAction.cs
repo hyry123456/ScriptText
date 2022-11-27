@@ -58,7 +58,7 @@ namespace Info
                 while(actions.Count > 0)
                 {
                     ActionData action = actions.GetValue(0);
-                    actions.Remove(0);
+                    actions.RemoveIndex(0);
                     hp += action.hp;
                 }
                 return hp;

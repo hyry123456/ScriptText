@@ -113,7 +113,7 @@ namespace Common
             }
             //从池中取出一个对象
             ObjectPoolingBase objectPool = list.GetValue(0);
-            list.Remove(0);         //从池中移除该对象
+            list.RemoveIndex(0);         //从池中移除该对象
             return objectPool;
         }
 

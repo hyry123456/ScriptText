@@ -172,7 +172,7 @@ namespace Info
             {
                 ActionData action = actions.GetValue(0);
                 hpChange += action.hp; solidChange += action.solide;
-                actions.Remove(0);
+                actions.RemoveIndex(0);
                 if (action.recall != null)
                     recalls.Push(action.recall);
                 if (action.state != null)
@@ -203,7 +203,7 @@ namespace Info
             for (int i = states.Count - 1; i >= 0; i--)
             {
                 if (states.GetValue(i).OnUpdate(this, hpChange, solidChange))
-                    states.Remove(i);
+                    states.RemoveIndex(i);
             }
 
             hp = Mathf.Max(hp, 0);

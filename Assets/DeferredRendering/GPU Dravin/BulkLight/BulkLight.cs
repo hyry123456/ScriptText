@@ -9,7 +9,7 @@ namespace DefferedRender
     {
         public Vector3 boundMax;
         public Vector3 boundMin;
-        public Vector4 lightIndex;
+        //public Vector4 lightIndex;
     };
 
     /// <summary> 
@@ -57,7 +57,6 @@ namespace DefferedRender
 
         ComputeBuffer boxsBuffer;
         BulkLightAssets lightAssets;
-        int kernel;
 
         private void Awake()
         {
@@ -70,7 +69,6 @@ namespace DefferedRender
             instance = this;
             lightAssets = Resources.Load<BulkLightAssets>
                 ("Render/BulkLight/Bulk Light");
-            kernel = lightAssets.compute.FindKernel("CaculateBulkBox");
         }
 
         private void OnDestroy()
@@ -125,13 +123,13 @@ namespace DefferedRender
         public void DrawBulkLight( CommandBuffer buffer)
         {
             if (boxsBuffer == null || lightAssets == null) return;
-            //设置数据
-            buffer.SetComputeBufferParam(lightAssets.compute,
-                kernel, "_ClusterDataBuffer", boxsBuffer);
-            buffer.SetComputeIntParam(lightAssets.compute, "_BoxCount", boxsBuffer.count);
-            //计算数据
-            buffer.DispatchCompute(lightAssets.compute, kernel,
-               boxsBuffer.count / 64 + 1, 1, 1);
+            ////设置数据
+            //buffer.SetComputeBufferParam(lightAssets.compute,
+            //    kernel, "_ClusterDataBuffer", boxsBuffer);
+            //buffer.SetComputeIntParam(lightAssets.compute, "_BoxCount", boxsBuffer.count);
+            ////计算数据
+            //buffer.DispatchCompute(lightAssets.compute, kernel,
+            //   boxsBuffer.count / 64 + 1, 1, 1);
 
             buffer.SetGlobalBuffer("_ClusterDataBuffer", boxsBuffer);
             buffer.DrawProcedural(Matrix4x4.identity, lightAssets.material,

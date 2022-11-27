@@ -16,6 +16,7 @@ Shader "Defferer/BulkLight"
 
             #pragma target 4.6
 
+			#pragma multi_compile _ _USE_CLUSTER
             #pragma vertex vert
             #pragma fragment frag
             #pragma require geometry

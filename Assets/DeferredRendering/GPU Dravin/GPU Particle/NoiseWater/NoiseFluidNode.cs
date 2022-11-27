@@ -59,13 +59,32 @@ namespace DefferedRender
         Shader shader;
         Material material;
 
+        [SerializeField]
+        Cubemap cubemap;
 
         FluidGroup[] groups;
 
         [SerializeField]
         List<IGetCollsion> collsions;
         [SerializeField]
+        public List<IGetCollsion> Collsions
+        {
+            get { return collsions; }
+            set { collsions = value; }
+        }
+        [SerializeField]
         WaterSetting waterSetting;
+        public WaterSetting WaterSetting => waterSetting;
+        [SerializeField]
+        bool isAutoPlay;        //是否自动播放
+        public void BeginAutoPlay()
+        {
+            isAutoPlay = true;
+        }
+        public void StopAutoPlay()
+        {
+            isAutoPlay = false;
+        }
 
         float time;
         int index = 0;
@@ -155,26 +174,28 @@ namespace DefferedRender
         private void Update()
         {
             if (!isInsert) return;
-
-            time += Time.deltaTime;
-            if (time > waterSetting.releaseTime)
+            if (isAutoPlay)
             {
-                time = 0;
-                for (int i = 0; i < PerReleaseCount; i++)
+                time += Time.deltaTime;
+                if (time > waterSetting.releaseTime)
                 {
-                    //到时间就拷贝数据
-                    if (groups[index].dieTime < Time.time)
+                    time = 0;
+                    for (int i = 0; i < PerReleaseCount; i++)
                     {
-                        groups[index].dieTime = Time.time + waterSetting.sustainTime;
-                        groupBuffer.SetData(groups, index, index, 1);
-                        index++;
-                        index %= GroupCount;
+                        //到时间就拷贝数据
+                        if (groups[index].dieTime < Time.time)
+                        {
+                            groups[index].dieTime = Time.time + waterSetting.sustainTime;
+                            groupBuffer.SetData(groups, index, index, 1);
+                            index++;
+                            index %= GroupCount;
+                        }
+                        else
+                            break;
                     }
-                    else
-                        break;
                 }
-
             }
+
             SetOnCompute();
             compute.Dispatch(kernel_Perframe, GroupCount, 1, 1);
         }
@@ -353,7 +374,7 @@ namespace DefferedRender
         public void IFluidDraw(ScriptableRenderContext context, CommandBuffer buffer,
             int gBufferDepth, int width, int height, int dest)
         {
-            float pixelScale = 0.5f;
+            float pixelScale = 0.8f;
             int bufferWidth = (int)(pixelScale * width),
                 bufferHeight = (int)(pixelScale * height);
             buffer.GetTemporaryRT(widthTexId, bufferWidth, bufferHeight, 0,
@@ -422,6 +443,10 @@ namespace DefferedRender
             buffer.SetGlobalVector(specularDataId, new Vector2(waterSetting.metallic,
                 waterSetting.roughness));
 
+            material.SetTexture("_CubeMap", cubemap);
+            material.SetVector("_BSDFData", new Vector3(
+                waterSetting.distorion,waterSetting.power, waterSetting.scale));
+
             buffer.Blit(null, dest, material, (int)FluidPass.BlendTarget);
 
             buffer.ReleaseTemporaryRT(widthTexId);
@@ -434,5 +459,50 @@ namespace DefferedRender
             buffer.SetGlobalVector(bufferSizeId, new Vector4(
                 1f / width, 1f / height, width, height));
         }
+
+        /// <summary> /// 进行一次液体释放，具体释放的数量由该节点本身决定 /// </summary>
+        public void ReleaseOneTime()
+        {
+            for (int i = 0; i < PerReleaseCount; i++)
+            {
+                //到时间就拷贝数据
+                if (groups[index].dieTime < Time.time)
+                {
+                    groups[index].dieTime = Time.time + waterSetting.sustainTime;
+                    groupBuffer.SetData(groups, index, index, 1);
+                    index++;
+                    index %= GroupCount;
+                }
+                else
+                    break;
+            }
+        }
+
+        public void ReCaculateCollsion()
+        {
+            collsionBuffer?.Release();
+            if (this.collsions == null) this.collsions = new List<IGetCollsion>();
+            List<CollsionStruct> collsions = new List<CollsionStruct>();
+            for (int i = this.collsions.Count - 1; i >= 0; i--)
+                if (this.collsions[i] == null) this.collsions.RemoveAt(i);
+            for (int i = 0; i < this.collsions.Count; i++)
+            {
+                collsions.Add(this.collsions[i].GetCollsionStruct());
+            }
+            if (collsions.Count == 0)
+            {
+                collsions.Add(new CollsionStruct
+                {
+                    radius = 0,
+                    center = Vector3.zero,
+                    offset = Vector3.zero,
+                    mode = 0
+                });
+            }
+            collsionBuffer = new ComputeBuffer(collsions.Count,
+                Marshal.SizeOf<CollsionStruct>());
+            collsionBuffer.SetData(collsions, 0, 0, collsions.Count);
+        }
+        
     }
 }

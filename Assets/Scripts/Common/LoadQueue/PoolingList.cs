@@ -8,16 +8,36 @@ namespace Common
     public class PoolingList<T>
     {
         [SerializeField]
-        private T[] list = new T[1];
-        private int size = 0;
+        private T[] list;
+        private int size;
+
+        public PoolingList(int capcity)
+        {
+            list = new T[capcity];
+            this.size = 0;
+        }
+        public PoolingList()
+        {
+            list = new T[1];
+            size = 0;
+        }
 
         public T[] Arrays => list;
         public int Count => size;
         /// <summary> /// 获取数值中的第index个元素    /// </summary>
         public T GetValue(int index)
         {
+            if (index >= size)
+                Debug.LogError("读取超过范围" + index.ToString());
             return list[index];
         }
+
+        /// <summary>   /// 设置数组中的值   /// </summary>
+        public void SetValue(int index, T value)
+        {
+            list[index] = value;
+        }
+
 
         public void SetCapacity(int capacity)
         {
@@ -54,11 +74,21 @@ namespace Common
             }
         }
 
-        public void Remove(int removeIndex)
+        public void RemoveIndex(int removeIndex)
         {
             if (removeIndex >= size) return;
             //将最后一个替换要删除的一个，达到复杂度为1的删除
             list[removeIndex] = list[size - 1];
+            size--;
+        }
+
+        public void RemoveIndexSave(int removeIndex)
+        {
+            if (removeIndex >= size) return;
+            for(int i = removeIndex; i < size - 1; i++)
+            {
+                list[i] = list[i + 1];
+            }
             size--;
         }
 
@@ -78,7 +108,7 @@ namespace Common
         }
         public void RemoveAll()
         {
-            size = 1;
+            size = 0;
         }
 
     }
