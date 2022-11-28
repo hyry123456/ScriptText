@@ -1,0 +1,1566 @@
+fileFormatVersion: 2
+guid: 6a9b50c1bb319d749aa949eaa03d6720
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 1297661350717332626
+    second: 13 custom design playing cards_0
+  - first:
+      213: 1322594723977771651
+    second: 13 custom design playing cards_1
+  - first:
+      213: -6236476968980041206
+    second: 13 custom design playing cards_2
+  - first:
+      213: -4342796312677076093
+    second: 13 custom design playing cards_3
+  - first:
+      213: 2189950004088183200
+    second: 13 custom design playing cards_4
+  - first:
+      213: -5910544837047545514
+    second: 13 custom design playing cards_5
+  - first:
+      213: 1227182006690595032
+    second: 13 custom design playing cards_6
+  - first:
+      213: -8244930446728878700
+    second: 13 custom design playing cards_7
+  - first:
+      213: 8096241295105953798
+    second: 13 custom design playing cards_8
+  - first:
+      213: -747317742133562565
+    second: 13 custom design playing cards_9
+  - first:
+      213: 5612396457426116591
+    second: 13 custom design playing cards_10
+  - first:
+      213: -1254784742384357661
+    second: 13 custom design playing cards_11
+  - first:
+      213: -5787867776672544277
+    second: 13 custom design playing cards_12
+  - first:
+      213: -1493963867455044360
+    second: 13 custom design playing cards_13
+  - first:
+      213: -4541583309069192361
+    second: 13 custom design playing cards_14
+  - first:
+      213: 2093733318286914408
+    second: 13 custom design playing cards_15
+  - first:
+      213: -5565940440002088912
+    second: 13 custom design playing cards_16
+  - first:
+      213: 1430001558217577894
+    second: 13 custom design playing cards_17
+  - first:
+      213: 1137584618564304427
+    second: 13 custom design playing cards_18
+  - first:
+      213: 2937968780906635289
+    second: 13 custom design playing cards_19
+  - first:
+      213: 4551905848296546087
+    second: 13 custom design playing cards_20
+  - first:
+      213: -1504486016001825615
+    second: 13 custom design playing cards_21
+  - first:
+      213: 2168333218143420739
+    second: 13 custom design playing cards_22
+  - first:
+      213: 9138561999390567587
+    second: 13 custom design playing cards_23
+  - first:
+      213: -6503404360143534847
+    second: 13 custom design playing cards_24
+  - first:
+      213: 2062922953857843580
+    second: 13 custom design playing cards_25
+  - first:
+      213: 8488460177128066442
+    second: 13 custom design playing cards_26
+  - first:
+      213: -5586954927544252428
+    second: 13 custom design playing cards_27
+  - first:
+      213: 6476938530916790779
+    second: 13 custom design playing cards_28
+  - first:
+      213: 1523665053184344770
+    second: 13 custom design playing cards_29
+  - first:
+      213: -8952211389832136979
+    second: 13 custom design playing cards_30
+  - first:
+      213: 7247685682600148500
+    second: 13 custom design playing cards_31
+  - first:
+      213: -7131428673334849461
+    second: 13 custom design playing cards_32
+  - first:
+      213: -461008164809400344
+    second: 13 custom design playing cards_33
+  - first:
+      213: 5472553588852168787
+    second: 13 custom design playing cards_34
+  - first:
+      213: -3368194616998181028
+    second: 13 custom design playing cards_35
+  - first:
+      213: -1899145482223454717
+    second: 13 custom design playing cards_36
+  - first:
+      213: 1193240560820642825
+    second: 13 custom design playing cards_37
+  - first:
+      213: -305935854899479928
+    second: 13 custom design playing cards_38
+  - first:
+      213: 101407277854924252
+    second: 13 custom design playing cards_39
+  - first:
+      213: 5641086701122353001
+    second: 13 custom design playing cards_40
+  - first:
+      213: -3314766632501123317
+    second: 13 custom design playing cards_41
+  - first:
+      213: 7051317483303395858
+    second: 13 custom design playing cards_42
+  - first:
+      213: -5592357652543471305
+    second: 13 custom design playing cards_43
+  - first:
+      213: -2373171359030206620
+    second: 13 custom design playing cards_44
+  - first:
+      213: 5855193721412258037
+    second: 13 custom design playing cards_45
+  - first:
+      213: -2395831760143330161
+    second: 13 custom design playing cards_46
+  - first:
+      213: -1352683214475655431
+    second: 13 custom design playing cards_47
+  - first:
+      213: -556525687839385624
+    second: 13 custom design playing cards_48
+  - first:
+      213: -4877713594567459546
+    second: 13 custom design playing cards_49
+  - first:
+      213: -2737282897441613894
+    second: 13 custom design playing cards_50
+  - first:
+      213: -1752118136747142909
+    second: 13 custom design playing cards_51
+  - first:
+      213: -6847876752692750304
+    second: 13 custom design playing cards_52
+  - first:
+      213: 2724040985193259512
+    second: 13 custom design playing cards_53
+  - first:
+      213: -6855699270845961758
+    second: Pocker_0
+  - first:
+      213: 6247532716845688871
+    second: Pocker_1
+  - first:
+      213: 8348350317824493693
+    second: Pocker_2
+  - first:
+      213: -2162771391603723367
+    second: Pocker_3
+  - first:
+      213: -880268477600983228
+    second: Pocker_4
+  - first:
+      213: -8713506925451112263
+    second: Pocker_5
+  - first:
+      213: -589207496201144109
+    second: Pocker_6
+  - first:
+      213: -943016070935326329
+    second: Pocker_7
+  - first:
+      213: -2330434357586584611
+    second: Pocker_8
+  - first:
+      213: 1456823199833957755
+    second: Pocker_9
+  - first:
+      213: -1605909607402038176
+    second: Pocker_10
+  - first:
+      213: 1140063566279139624
+    second: Pocker_11
+  - first:
+      213: -6690078708909018171
+    second: Pocker_12
+  - first:
+      213: 3046908121825907029
+    second: Pocker_13
+  - first:
+      213: 6137805551069062537
+    second: Pocker_14
+  - first:
+      213: 1198776997279921789
+    second: Pocker_15
+  - first:
+      213: 3050905573064392094
+    second: Pocker_16
+  - first:
+      213: 7810912173977650275
+    second: Pocker_17
+  - first:
+      213: 5187858493153754433
+    second: Pocker_18
+  - first:
+      213: -7611557209210941092
+    second: Pocker_19
+  - first:
+      213: -6195409603780622547
+    second: Pocker_20
+  - first:
+      213: 8272838853921609024
+    second: Pocker_21
+  - first:
+      213: -91539355405036028
+    second: Pocker_22
+  - first:
+      213: 5094846706853366291
+    second: Pocker_23
+  - first:
+      213: -4821730217074528220
+    second: Pocker_24
+  - first:
+      213: -7765454666873289177
+    second: Pocker_25
+  - first:
+      213: 76044272584247240
+    second: Pocker_26
+  - first:
+      213: 9191911466766592921
+    second: Pocker_27
+  - first:
+      213: 433239154208746826
+    second: Pocker_28
+  - first:
+      213: 6743700631749683353
+    second: Pocker_29
+  - first:
+      213: -2950148276441147101
+    second: Pocker_30
+  - first:
+      213: -16572606559300694
+    second: Pocker_31
+  - first:
+      213: -5194558686021337641
+    second: Pocker_32
+  - first:
+      213: -8202730382370946004
+    second: Pocker_33
+  - first:
+      213: 1510909975828440569
+    second: Pocker_34
+  - first:
+      213: -2498058799331874682
+    second: Pocker_35
+  - first:
+      213: 6744445909440247142
+    second: Pocker_36
+  - first:
+      213: -5763983091210791349
+    second: Pocker_37
+  - first:
+      213: 4428683701144298050
+    second: Pocker_38
+  - first:
+      213: 926493699275169582
+    second: Pocker_39
+  - first:
+      213: -8303675298024779676
+    second: Pocker_40
+  - first:
+      213: -70503095089168871
+    second: Pocker_41
+  - first:
+      213: -3548003021683832954
+    second: Pocker_42
+  - first:
+      213: 1685408650575984567
+    second: Pocker_43
+  - first:
+      213: -8395328416786445285
+    second: Pocker_44
+  - first:
+      213: -1741868103068826526
+    second: Pocker_45
+  - first:
+      213: -8500915527252828311
+    second: Pocker_46
+  - first:
+      213: 6897964639979775459
+    second: Pocker_47
+  - first:
+      213: -1054246152673002333
+    second: Pocker_48
+  - first:
+      213: 3445767780400196065
+    second: Pocker_49
+  - first:
+      213: 7218760713814963762
+    second: Pocker_50
+  - first:
+      213: 8873541606161244101
+    second: Pocker_51
+  - first:
+      213: 1500282393889094225
+    second: Pocker_52
+  - first:
+      213: 9159732316784122248
+    second: Pocker_53
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Pocker_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1427.5555
+        width: 133.33333
+        height: 178.44444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e9625216d9abd0a0800000000000000
+      internalID: -6855699270845961758
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocker_1
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 1427.5555
+        width: 133.33333
+        height: 178.44444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 728e736b7e1b3b650800000000000000
+      internalID: 6247532716845688871
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocker_2
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 1427.5555
+        width: 133.33333
+        height: 178.44444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d78c272f16c4bd370800000000000000
+      internalID: 8348350317824493693
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocker_3
+      rect:
+        serializedVersion: 2
+        x: 399
+        y: 1427.5555
+        width: 133.33333
+        height: 178.44444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9933511d0ea4cf1e0800000000000000
+      internalID: -2162771391603723367
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocker_4
+      rect:
+        serializedVersion: 2
+        x: 532
+        y: 1427.5555
+        width: 133.33333
+        height: 178.44444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4479e95cb78a8c3f0800000000000000
+      internalID: -880268477600983228
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocker_5
+      rect:
+        serializedVersion: 2
+        x: 665
+        y: 1427.5555
+        width: 133.33333
+        height: 178.44444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b094901e97631780800000000000000
+      internalID: -8713506925451112263
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocker_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1249.5555
+        width: 133.33333
+        height: 178.44444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d8fee967e6b2d7f0800000000000000
+      internalID: -589207496201144109
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocker_7
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 1249.5555
+        width: 133.33333
+        height: 178.44444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7815a6a31ebb9e2f0800000000000000
+      internalID: -943016070935326329
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocker_8
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 1249.5555
+        width: 133.33333
+        height: 178.44444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ddb9fa78c42a8afd0800000000000000
+      internalID: -2330434357586584611
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocker_9
+      rect:
+        serializedVersion: 2
+        x: 399
+        y: 1249.5555
+        width: 133.33333
+        height: 178.44444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b75a6ae4bfca73410800000000000000
+      internalID: 1456823199833957755
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocker_10
+      rect:
+        serializedVersion: 2
+        x: 532
+        y: 1249.5555
+        width: 133.33333
+        height: 178.44444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 06c1a6578b9a6b9e0800000000000000
+      internalID: -1605909607402038176
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocker_11
+      rect:
+        serializedVersion: 2
+        x: 665
+        y: 1249.5555
+        width: 133.33333
+        height: 178.44444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 821ee61f5c152df00800000000000000
+      internalID: 1140063566279139624
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocker_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1071.5555
+        width: 133.33333
+        height: 178.44444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c3f21c1cd01823a0800000000000000
+      internalID: -6690078708909018171
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocker_13
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 1071.5555
+        width: 133.33333
+        height: 178.44444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5519fa82bcac84a20800000000000000
+      internalID: 3046908121825907029
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocker_14
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 1071.5555
+        width: 133.33333
+        height: 178.44444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 98564e311addd2550800000000000000
+      internalID: 6137805551069062537
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocker_15
+      rect:
+        serializedVersion: 2
+        x: 399
+        y: 1071.5555
+        width: 133.33333
+        height: 178.44444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d7677cfd359e2a010800000000000000
+      internalID: 1198776997279921789
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocker_16
+      rect:
+        serializedVersion: 2
+        x: 532
+        y: 1071.5555
+        width: 133.33333
+        height: 178.44444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e9d33cd447ef65a20800000000000000
+      internalID: 3050905573064392094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocker_17
+      rect:
+        serializedVersion: 2
+        x: 665
+        y: 1071.5555
+        width: 133.33333
+        height: 178.44444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 36446bdfc3fe56c60800000000000000
+      internalID: 7810912173977650275
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocker_18
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 893.55554
+        width: 133.33333
+        height: 178.44444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 14d3c6520d9fef740800000000000000
+      internalID: 5187858493153754433
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocker_19
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 893.55554
+        width: 133.33333
+        height: 178.44444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c511b65cb015e5690800000000000000
+      internalID: -7611557209210941092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocker_20
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 893.55554
+        width: 133.33333
+        height: 178.44444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d27cc904acb750aa0800000000000000
+      internalID: -6195409603780622547
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocker_21
+      rect:
+        serializedVersion: 2
+        x: 399
+        y: 893.55554
+        width: 133.33333
+        height: 178.44444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0451c043b170fc270800000000000000
+      internalID: 8272838853921609024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocker_22
+      rect:
+        serializedVersion: 2
+        x: 532
+        y: 893.55554
+        width: 133.33333
+        height: 178.44444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4065d16f079cabef0800000000000000
+      internalID: -91539355405036028
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocker_23
+      rect:
+        serializedVersion: 2
+        x: 665
+        y: 893.55554
+        width: 133.33333
+        height: 178.44444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 31a4013161884b640800000000000000
+      internalID: 5094846706853366291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocker_24
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 715.55554
+        width: 133.33333
+        height: 178.44444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 42071880ae5c51db0800000000000000
+      internalID: -4821730217074528220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocker_25
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 715.55554
+        width: 133.33333
+        height: 178.44444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7264e95af109b3490800000000000000
+      internalID: -7765454666873289177
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocker_26
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 715.55554
+        width: 133.33333
+        height: 178.44444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c7469eecd92e0100800000000000000
+      internalID: 76044272584247240
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocker_27
+      rect:
+        serializedVersion: 2
+        x: 399
+        y: 715.55554
+        width: 133.33333
+        height: 178.44444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 99b667737ca309f70800000000000000
+      internalID: 9191911466766592921
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocker_28
+      rect:
+        serializedVersion: 2
+        x: 532
+        y: 715.55554
+        width: 133.33333
+        height: 178.44444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a4d276127bc230600800000000000000
+      internalID: 433239154208746826
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocker_29
+      rect:
+        serializedVersion: 2
+        x: 665
+        y: 715.55554
+        width: 133.33333
+        height: 178.44444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9986403beff669d50800000000000000
+      internalID: 6743700631749683353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocker_30
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 537.55554
+        width: 133.33333
+        height: 178.44444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3299efbe5c7fe07d0800000000000000
+      internalID: -2950148276441147101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocker_31
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 537.55554
+        width: 133.33333
+        height: 178.44444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aa3d7095d4f15cff0800000000000000
+      internalID: -16572606559300694
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocker_32
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 537.55554
+        width: 133.33333
+        height: 178.44444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7dd37c2a56839e7b0800000000000000
+      internalID: -5194558686021337641
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocker_33
+      rect:
+        serializedVersion: 2
+        x: 399
+        y: 537.55554
+        width: 133.33333
+        height: 178.44444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c24c97a5d2c0a2e80800000000000000
+      internalID: -8202730382370946004
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocker_34
+      rect:
+        serializedVersion: 2
+        x: 532
+        y: 537.55554
+        width: 133.33333
+        height: 178.44444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9f529dc2e94d7f410800000000000000
+      internalID: 1510909975828440569
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocker_35
+      rect:
+        serializedVersion: 2
+        x: 665
+        y: 537.55554
+        width: 133.33333
+        height: 178.44444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 688e8cdd1cc155dd0800000000000000
+      internalID: -2498058799331874682
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocker_36
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 359.55554
+        width: 133.33333
+        height: 178.44444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 665b50f22d5199d50800000000000000
+      internalID: 6744445909440247142
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocker_37
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 359.55554
+        width: 133.33333
+        height: 178.44444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b46d50ddae73200b0800000000000000
+      internalID: -5763983091210791349
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocker_38
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 359.55554
+        width: 133.33333
+        height: 178.44444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 242a44dac58d57d30800000000000000
+      internalID: 4428683701144298050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocker_39
+      rect:
+        serializedVersion: 2
+        x: 399
+        y: 359.55554
+        width: 133.33333
+        height: 178.44444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e2f1fe75c119bdc00800000000000000
+      internalID: 926493699275169582
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocker_40
+      rect:
+        serializedVersion: 2
+        x: 532
+        y: 359.55554
+        width: 133.33333
+        height: 178.44444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4601c0baf4b63cc80800000000000000
+      internalID: -8303675298024779676
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocker_41
+      rect:
+        serializedVersion: 2
+        x: 665
+        y: 359.55554
+        width: 133.33333
+        height: 178.44444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 91ef4adfec5850ff0800000000000000
+      internalID: -70503095089168871
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocker_42
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 181.55556
+        width: 133.33333
+        height: 178.44444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 687c586cc06f2cec0800000000000000
+      internalID: -3548003021683832954
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocker_43
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 181.55556
+        width: 133.33333
+        height: 178.44444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7b7b3feec36c36710800000000000000
+      internalID: 1685408650575984567
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocker_44
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 181.55556
+        width: 133.33333
+        height: 178.44444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b1c83b8094dcd7b80800000000000000
+      internalID: -8395328416786445285
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocker_45
+      rect:
+        serializedVersion: 2
+        x: 399
+        y: 181.55556
+        width: 133.33333
+        height: 178.44444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 264cff66034a3d7e0800000000000000
+      internalID: -1741868103068826526
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocker_46
+      rect:
+        serializedVersion: 2
+        x: 532
+        y: 181.55556
+        width: 133.33333
+        height: 178.44444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 96f1e742e5ea60a80800000000000000
+      internalID: -8500915527252828311
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocker_47
+      rect:
+        serializedVersion: 2
+        x: 665
+        y: 181.55556
+        width: 133.33333
+        height: 178.44444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e523370b4e7abf50800000000000000
+      internalID: 6897964639979775459
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocker_48
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 3.5555573
+        width: 133.33333
+        height: 178.44444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ac7a14b5b09e51f0800000000000000
+      internalID: -1054246152673002333
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocker_49
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 3.5555573
+        width: 133.33333
+        height: 178.44444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1e96d313a83d1df20800000000000000
+      internalID: 3445767780400196065
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocker_50
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 3.5555573
+        width: 133.33333
+        height: 178.44444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2367c716f903e2460800000000000000
+      internalID: 7218760713814963762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocker_51
+      rect:
+        serializedVersion: 2
+        x: 399
+        y: 3.5555573
+        width: 133.33333
+        height: 178.44444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5cfd3e6a317252b70800000000000000
+      internalID: 8873541606161244101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocker_52
+      rect:
+        serializedVersion: 2
+        x: 532
+        y: 3.5555573
+        width: 133.33333
+        height: 178.44444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 15a388e63e212d410800000000000000
+      internalID: 1500282393889094225
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocker_53
+      rect:
+        serializedVersion: 2
+        x: 665
+        y: 3.5555573
+        width: 133.33333
+        height: 178.44444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88955930308ed1f70800000000000000
+      internalID: 9159732316784122248
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 506f4e9295880dd43b58f03fc557b4e2
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
