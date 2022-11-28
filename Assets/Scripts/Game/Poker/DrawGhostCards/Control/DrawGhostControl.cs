@@ -65,39 +65,34 @@ public class DrawGhostControl : MonoBehaviour
         player.InitializedCard(drawGhost.PlayerCards, Vector2.zero, drawGhost.Player);
     }
 
-    [SerializeField]
-    Pair<int, int> change;
+    bool isPlayer;
+    int targetCardIndex;
     [SerializeField]
     float time;
-    Pair<Vector3, Vector3> begin;
-    Pair<Vector3, Vector3> target;
+    Pair<Vector3, Vector3> moveRange;
+    ClickRemain chooseRemain;
 
     [Range(0, 1.1f)]
     public float radio = 0;
 
-    public void ChangeCard(Pair<int, int> change, bool isPlayer)
+    public void ChangeCard(int targetCard, bool isPlayer)
     {
+        this.isPlayer = isPlayer;
+        targetCardIndex = targetCard;
         if (isPlayer)
         {
-            this.change = change;
-            target = new Pair<Vector3, Vector3>(
-                banker.GetRemainTransform(change.Value).position,
-                player.GetRemainTransform(change.Key).position);
-            begin = new Pair<Vector3, Vector3>(
-                player.GetRemainTransform(change.Key).position,
-                banker.GetRemainTransform(change.Value).position);
+            moveRange = new Pair<Vector3, Vector3>(
+                banker.GetRemainTransform(targetCard).position,
+                player.GetTargetWorldPos(drawGhost.PlayerCards.Count));
+            chooseRemain = banker.RemainLists[targetCard];
         }
         else
         {
-            this.change = new Pair<int, int>(change.Value, change.Key);
-            target = new Pair<Vector3, Vector3>(
-                banker.GetRemainTransform(change.Key).position,
-                player.GetRemainTransform(change.Value).position);
-            begin = new Pair<Vector3, Vector3>(
-                player.GetRemainTransform(change.Value).position,
-                banker.GetRemainTransform(change.Key).position);
+            moveRange = new Pair<Vector3, Vector3>(
+                player.GetRemainTransform(targetCard).position,
+                banker.GetTargetWorldPos(drawGhost.AiCards.Count));
+            chooseRemain = player.RemainLists[targetCard];
         }
-        this.change = change;
         time = 0;
         SustainCoroutine.Instance.AddCoroutine(ChangeCard);
     }
@@ -107,13 +102,28 @@ public class DrawGhostControl : MonoBehaviour
         time += Time.deltaTime;
         if (time > 2.0f)
         {
-            MoveCard(0);
-            int key = drawGhost.Player.Cards.GetValue(change.Key);
-            int value = drawGhost.AI.Cards.GetValue(change.Value);
-            drawGhost.Player.ChangeCard(change.Key, value);
-            drawGhost.AI.ChangeCard(change.Value, key);
-            player.RemainLists[change.Key].Image.sprite = GetPoker(value);
-            banker.RemainLists[change.Value].Image.sprite = GetPoker(key);
+            MoveCard(1);
+            if (isPlayer)
+            {
+                chooseRemain.transform.parent = player.transform;
+                chooseRemain.Index = player.RemainLists.Count;
+                player.RemainLists.Add(chooseRemain);
+                banker.RemainLists.RemoveAt(targetCardIndex);
+                drawGhost.Player.Cards.Add(drawGhost.AiCards.GetValue(targetCardIndex));
+                drawGhost.AI.Cards.RemoveIndexSave(targetCardIndex);
+            }
+            else
+            {
+                chooseRemain.transform.parent = banker.transform;
+                chooseRemain.Index = banker.RemainLists.Count;
+                banker.RemainLists.Add(chooseRemain);
+                player.RemainLists.RemoveAt(targetCardIndex);
+                drawGhost.AiCards.Add(drawGhost.PlayerCards.GetValue(targetCardIndex));
+                drawGhost.PlayerCards.RemoveIndexSave(targetCardIndex);
+            }
+            Check();
+
+
             RemoveEqualAndReset();
             return true;
         }
@@ -136,14 +146,36 @@ public class DrawGhostControl : MonoBehaviour
         return false;
     }
 
+    private void Check()
+    {
+        HashSet<int> set = new HashSet<int>();
+        for(int i = 0; i < drawGhost.PlayerCards.Count; i++)
+        {
+            if (set.Contains(drawGhost.PlayerCards.GetValue(i)))
+            {
+                Debug.Log("组内重复" +
+                    DrawGhostCard.GetCardName(drawGhost.PlayerCards.GetValue(i)));
+            }
+            else
+                set.Add(drawGhost.PlayerCards.GetValue(i));
+        }
+
+        for(int i = 0; i < drawGhost.AiCards.Count; i++)
+        {
+            if (set.Contains(drawGhost.AiCards.GetValue(i)))
+            {
+                Debug.Log("两边重复" +
+                    DrawGhostCard.GetCardName(drawGhost.AiCards.GetValue(i)));
+            }
+            else
+                set.Add(drawGhost.AiCards.GetValue(i));
+        }
+    }
+
     void MoveCard(float radio01)
     {
-        RectTransform rect_Play = player.GetRemainTransform(change.Key);
-        RectTransform rect_Bank = banker.GetRemainTransform(change.Value);
-        rect_Play.position = Vector3.Lerp(
-            begin.Key, target.Key, radio01);
-        rect_Bank.position = Vector2.Lerp(
-            begin.Value, target.Value, radio01);
+        chooseRemain.RectTransform.position =
+            Vector3.Lerp(moveRange.Key, moveRange.Value, radio01);
     }
 
     //待移除的数组
@@ -194,7 +226,7 @@ public class DrawGhostControl : MonoBehaviour
             {
                 movePlay.Add(new Pair<Vector2, Vector2>(
                     player.RemainLists[i].RectTransform.anchoredPosition,
-                    player.GetTargetPos(i)));
+                    player.GetTargetAnchoredPos(i)));
                 player.RemainLists[i].Origin = player;
                 player.RemainLists[i].Index = i;
             }
@@ -202,7 +234,7 @@ public class DrawGhostControl : MonoBehaviour
             {
                 moveBank.Add(new Pair<Vector2, Vector2>(
                     banker.RemainLists[i].RectTransform.anchoredPosition,
-                    banker.GetTargetPos(i)));
+                    banker.GetTargetAnchoredPos(i)));
                 banker.RemainLists[i].Origin = banker;
                 banker.RemainLists[i].Index = i;
             }

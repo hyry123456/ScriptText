@@ -29,6 +29,9 @@ public abstract class DrawGhostShow : MonoBehaviour
 
     public abstract void OnChangeChoose(ClickRemain newRemain);
 
+    Vector3 worldBegin;
+    Vector3 perOffset;
+
     /// <summary> /// 游戏的初始化，用来第一次牌的初始化 /// </summary>
     /// <param name="cards"></param>
     /// <param name="beginPos"></param>
@@ -47,10 +50,11 @@ public abstract class DrawGhostShow : MonoBehaviour
             remain.Image.sprite = control.GetPoker(cards.GetValue(i));
             remain.Index = i;
             remain.Origin = this;
-            move.Add(new Pair<Vector2, Vector2>(beginPos, GetTargetPos(i)));
+            move.Add(new Pair<Vector2, Vector2>(beginPos, GetTargetAnchoredPos(i)));
             item.GetComponent<RectTransform>().anchoredPosition = beginPos;
             remainLists.Add(remain);
         }
+
 
         SustainCoroutine.Instance.AddCoroutine(InitializedPos);
     }
@@ -65,6 +69,8 @@ public abstract class DrawGhostShow : MonoBehaviour
             MoveCard(1);
             user.HasChange = false;
             SustainCoroutine.Instance.AddCoroutine(Circle);
+            worldBegin = remainLists[0].RectTransform.position;
+            perOffset = remainLists[1].RectTransform.position - remainLists[0].RectTransform.position;
             return true;
         }
         MoveCard(time / 2.0f);
@@ -83,10 +89,15 @@ public abstract class DrawGhostShow : MonoBehaviour
         }
     }
 
-    public virtual Vector2 GetTargetPos(int index)
+    public virtual Vector2 GetTargetAnchoredPos(int index)
     {
         return new Vector2(itemSize.x * index + positionOffset.x
                 + nearLength * index, itemSize.y + positionOffset.y);
+    }
+
+    public virtual Vector3 GetTargetWorldPos(int index)
+    {
+        return worldBegin + index * perOffset;
     }
 
 

@@ -21,6 +21,8 @@ public class DrawGhostShow_AI : DrawGhostShow
 
     protected override void OnChoosing()
     {
-        user.Recall(0, 0);
+        //user.Recall(0);
+        int max = control.Player.User.Cards.Count;
+        user.Recall(Random.Range(0, max));
     }
 }

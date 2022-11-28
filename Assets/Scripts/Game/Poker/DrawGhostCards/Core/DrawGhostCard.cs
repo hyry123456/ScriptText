@@ -122,7 +122,7 @@ public class DrawGhostCard : Poker
         return re;
     }
 
-    void Recall(Pair<int, int> pair)
+    void Recall(int pair)
     {
         control.ChangeCard(pair, index == 0);
         //if (index == 0)          //Ö÷½Ç

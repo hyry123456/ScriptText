@@ -16,7 +16,7 @@ public class DrawGhost_Player : DrawGhost_User
         }
     }
 
-    public override void BeginChoose(ISetOneParam<Pair<int, int>> recall, DrawGhostCard drawGhost)
+    public override void BeginChoose(ISetOneParam<int> recall, DrawGhostCard drawGhost)
     {
         base.BeginChoose(recall, drawGhost);
         string str = "Íæ¼Òµ±Ç°ÅÆ";

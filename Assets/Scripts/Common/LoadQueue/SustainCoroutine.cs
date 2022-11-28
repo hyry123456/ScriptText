@@ -141,9 +141,12 @@ namespace Common
         /// <summary>        /// 加入方法到持续协程栈中，进行逐帧运行        /// </summary>
         /// <param name="action">方法</param>
         /// <param name="canWait">是否可以等待，false时会立刻执行</param>
-        public void AddCoroutine(CoroutinesAction action, bool canWait = true)
+        /// <param name="canRepetition">是否可以重复，对于嵌套进入的协程需要允许重复，
+        /// 但是大部分都不需要允许，避免bug</param>
+        public void AddCoroutine(CoroutinesAction action, bool canWait = true,
+            bool canRepetition = false)
         {
-            if (sustainList.IsHave(action))
+            if (!canRepetition && sustainList.IsHave(action))
                 return;
             sustainList.Add(action);
             if (canWait) return;

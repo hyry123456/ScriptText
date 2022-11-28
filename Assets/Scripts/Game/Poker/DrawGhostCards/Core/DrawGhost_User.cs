@@ -14,7 +14,7 @@ public abstract class DrawGhost_User
     private DrawGhostCard origin;
     public DrawGhostCard Origin => origin;
 
-    private ISetOneParam<Pair<int, int>> recall;
+    private ISetOneParam<int> recall;
     private PoolingList<int> cards = new PoolingList<int>();
 
     public bool Choosing => choosing;
@@ -53,7 +53,7 @@ public abstract class DrawGhost_User
 
     /// <summary>/// 开启选择权限/// </summary>
     /// <param name="recall">会调函数，用来确定交换的编号</param>
-    public virtual void BeginChoose(ISetOneParam<Pair<int, int>> recall,
+    public virtual void BeginChoose(ISetOneParam<int> recall,
         DrawGhostCard drawGhost)
     {
         this.recall = recall;
@@ -64,9 +64,9 @@ public abstract class DrawGhost_User
     /// <summary>
     /// 进行选中的函数，选择自己的一张以及别人的一张进行交换
     /// </summary>
-    public void Recall(int myIndex, int targetIndex)
+    public void Recall(int targetIndex)
     {
         choosing = false;
-        recall(new Pair<int, int>(myIndex, targetIndex));
+        recall(targetIndex);
     }
 }

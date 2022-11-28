@@ -107,7 +107,8 @@ public class Banker
         }
         str += " 号码为" + Point.ToString();
         Debug.Log(str);
-        Common.SustainCoroutine.Instance.AddCoroutine(CircleGetCard);
+        Common.SustainCoroutine.Instance.AddCoroutine(CircleGetCard,
+            true, true);
     }
 
     float time;
@@ -115,7 +116,6 @@ public class Banker
     private bool CircleGetCard()
     {
         time += Time.deltaTime;
-        Debug.Log("Wait");
         if(time > 1.0f)
         {
             if(Point < 17)

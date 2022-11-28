@@ -6,28 +6,26 @@ public class DrawGhostShow_Player : DrawGhostShow
     {
         if (currentRemain != null)
             currentRemain.Image.color = Color.gray;
-        if (!user.Choosing)
+        //当庄家在选择时才可以选中
+        if (control.Banker.User.Choosing)
         {
-            currentRemain = null;
+            if (newRemain != null)
+                newRemain.Image.color = Color.white;
+            currentRemain = newRemain;
             return;
         }
         else
-        {
-            if(newRemain != null)
-                newRemain.Image.color = Color.white;
-            currentRemain = newRemain;
-        }
+            currentRemain = null;
     }
 
     protected override void OnChoosing()
     {
-        if (currentRemain == null || control.Banker.CurrentRemain == null)
+        if (control.Banker.CurrentRemain == null)
             return;
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            currentRemain.Image.color = Color.grey;
             control.Banker.CurrentRemain.Image.color = Color.grey;
-            user.Recall(currentRemain.Index, control.Banker.CurrentRemain.Index);
+            user.Recall(control.Banker.CurrentRemain.Index);
         }
     }
 }

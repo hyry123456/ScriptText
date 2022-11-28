@@ -541,9 +541,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pockerItem: {fileID: 3826334282842908808, guid: 68684a633e920da478ec50404f93fac9, type: 3}
-  change:
-    Key: 0
-    Value: 0
   time: 0
   radio: 0
 --- !u!114 &737903153
