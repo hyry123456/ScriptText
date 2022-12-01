@@ -8,9 +8,19 @@
 #include "../../ShaderLibrary/BRDF.hlsl"
 #include "../../ShaderLibrary/GI.hlsl"
 #include "../../ShaderLibrary/Lighting.hlsl"
-#include "../../ShaderLibrary/MyTerrain.hlsl"
 
-struct Varyings_TREE {
+
+
+struct Attributes {
+	float3 positionOS : POSITION;
+	float3 normalOS : NORMAL;
+	float4 tangentOS : TANGENT;
+	float2 baseUV : TEXCOORD0;
+	GI_ATTRIBUTE_DATA
+	UNITY_VERTEX_INPUT_INSTANCE_ID
+};
+
+struct Varyings {
 	float4 positionCS_SS : SV_POSITION;
 	float3 positionWS : VAR_POSITION;
 	float3 normalWS : VAR_NORMAL;
@@ -21,83 +31,84 @@ struct Varyings_TREE {
 	#if defined(_DETAIL_MAP)
 		float2 detailUV : VAR_DETAIL_UV;
 	#endif
-	// GI_VARYINGS_DATA
+	GI_VARYINGS_DATA
 	UNITY_VERTEX_INPUT_INSTANCE_ID
 };
 
-
-Varyings_TREE LitPassVertex (Attributes_full input) {
-	Varyings_TREE output;
+Varyings LitPassVertex (Attributes input) {
+	Varyings output;
 	UNITY_SETUP_INSTANCE_ID(input);
 	UNITY_TRANSFER_INSTANCE_ID(input, output);
-    TreeVertLeaf(input);
-
-	output.positionWS = TransformObjectToWorld(input.positionOS.xyz);
+	TRANSFER_GI_DATA(input, output);
+	output.positionWS = TransformObjectToWorld(input.positionOS);
 	output.positionCS_SS = TransformWorldToHClip(output.positionWS);
-	output.normalWS = TransformObjectToWorldNormal(input.normalOS.xyz);
+	output.normalWS = TransformObjectToWorldNormal(input.normalOS);
 	#if defined(_NORMAL_MAP)
 		output.tangentWS = float4(
 			TransformObjectToWorldDir(input.tangentOS.xyz), input.tangentOS.w
 		);
 	#endif
-	output.baseUV = TransformBaseUV(input.texcoord0.xy);
+	output.baseUV = TransformBaseUV(input.baseUV);
 	#if defined(_DETAIL_MAP)
-		output.detailUV = TransformDetailUV(input.texcoord0.xy);
+		output.detailUV = TransformDetailUV(input.baseUV);
 	#endif
 	return output;
 }
 
-void LitPassFragment (Varyings_TREE input,
-        out float4 _GBufferColorTex : SV_Target0,
-        out float4 _GBufferNormalTex : SV_Target1,
-        out float4 _GBufferSpecularTex : SV_Target2,
-        out float4 _GBufferBakeTex : SV_Target3
-    ) {
-	// UNITY_SETUP_INSTANCE_ID(input);
-	// InputConfig config = GetInputConfig(input.baseUV);
-	// ClipLOD(input.positionCS_SS.xy, unity_LODFade.x);
+float4 LitPassFragment (Varyings input) : SV_TARGET {
+	UNITY_SETUP_INSTANCE_ID(input);
+	InputConfig config = GetInputConfig(input.baseUV);
+	ClipLOD(input.positionCS_SS.xy, unity_LODFade.x);
 	
-	// #if defined(_MASK_MAP)
-	// 	config.useMask = true;
-	// #endif
-	// #if defined(_DETAIL_MAP)
-	// 	config.detailUV = input.detailUV;
-	// 	config.useDetail = true;
-	// #endif
+	#if defined(_MASK_MAP)
+		config.useMask = true;
+	#endif
+	#if defined(_DETAIL_MAP)
+		config.detailUV = input.detailUV;
+		config.useDetail = true;
+	#endif
 	
-	// //纹理颜色
-	// float4 base = GetBase(config);
-	// float3 positionWS = input.positionWS;
-	// #if defined(_CLIPPING)
-	// 	clip(base.a - GetCutoff(config));
-	// #endif
+	float4 base = GetBase(config);
+	#if defined(_CLIPPING)
+		clip(base.a - GetCutoff(config));
+	#endif
 	
-	// float3 normal;
-	// float3 perNormal = input.normalWS;
-	// #if defined(_NORMAL_MAP)
-	// 	normal = NormalTangentToWorld(
-	// 		GetNormalTS(config), input.normalWS, input.tangentWS
-	// 	);
-	// #else
-	// 	normal = normalize(input.normalWS);
-	// #endif
+	Surface surface = (Surface)0;
+	surface.position = input.positionWS;
+	#if defined(_NORMAL_MAP)
+		surface.normal = NormalTangentToWorld(
+			GetNormalTS(config), input.normalWS, input.tangentWS
+		);
+	#else
+		surface.normal = normalize(input.normalWS);
+	#endif
 
-	// float width = GetWidth(config);
-	// float4 specularData = float4(GetMetallic(config), GetSmoothness(config), GetFresnel(config), width);		//w赋值为1表示开启PBR
 
-	// //烘焙灯光，只处理了烘焙贴图，没有处理阴影烘焙，需要注意
-	// // float3 bakeColor = GetBakeDate(GI_FRAGMENT_DATA(input), positionWS, perNormal);
-	// float oneMinusReflectivity = OneMinusReflectivity(specularData.r);
-	// float3 diffuse = base.rgb * oneMinusReflectivity;
-	// // bakeColor = bakeColor * diffuse + GetEmission(config);				//通过金属度缩减烘焙光，再加上自发光，之后会在着色时直接加到最后的结果上
-	// float4 shiftColor = GetShiftColor(config);			//分别使用三张图的透明通道写入
+	surface.viewDirection = normalize(_WorldSpaceCameraPos - input.positionWS);
+	surface.depth = -TransformWorldToView(input.positionWS).z;
+	surface.color = base.rgb;
+	surface.alpha = base.a;
+	surface.metallic = GetMetallic(config);
+	surface.roughness = GetRoughness(config);
+	surface.ambientOcclusion = GetOcclusion(config);
+	surface.dither = InterleavedGradientNoise(input.positionCS_SS.xy, 0);
 
-	// _GBufferColorTex = float4(base.xyz, shiftColor.x);
-	// _GBufferNormalTex = float4(normal * 0.5 + 0.5, shiftColor.y);
-	// _GBufferSpecularTex = specularData;
+	float normalDistorion = GetTranslucencyViewDependency();
+	float power = GetTranslucencyPower();
+	float scale = GetTranslucencyScale();
+	
+	float3 color = GetGBufferBSDFLight(surface, input.positionCS_SS, normalDistorion, power, 0.1f, scale);
 
-	// _GBufferBakeTex = float4(GetEmission(config), shiftColor.z);
+	float3 viewDir = normalize(_WorldSpaceCameraPos - input.positionWS);
+	float3 reflect_dir = reflect(-surface.viewDirection, surface.normal);		
+	float mip_Level = surface.metallic * (1.7 - 0.7 * surface.metallic);
+	float3 refl = ComputeIndirectSpecular(reflect_dir, input.positionWS, mip_Level);
+
+	color.xyz += refl * surface.color;
+	color.xyz *= surface.ambientOcclusion;
+
+	color += GetEmission(config);
+	return float4(color, 1);
 }
-
 
 #endif

@@ -68,11 +68,6 @@ float3 GetGBufferLight(Surface surface, float4 clipPos){
 	return color;
 }
 
-// struct DiffuseData{
-// 	float3 diffuseLightCol;
-// 	float3 specularCol;
-// };
-
 float3 GetGBufferBSDFLight(Surface surface, float3 uv_Depth, float normalDistorion, float power, float width, float scale){
 	ShadowData shadowData = GetShadowData(surface);
 
@@ -100,6 +95,36 @@ float3 GetGBufferBSDFLight(Surface surface, float3 uv_Depth, float normalDistori
 #endif
 	return color;
 }
+
+float3 GetGBufferBSDFLight(Surface surface, float4 clipPos, float normalDistorion, float power, float width, float scale){
+	ShadowData shadowData = GetShadowData(surface);
+
+	float3 color = 0;
+	for (int i = 0; i < GetDirectionalLightCount(); i++) {
+		Light light = GetDirectionalLight(i, surface, shadowData);
+		color += DirectBSDF(surface, light, normalDistorion, power, width, scale);
+	}
+
+#ifdef _USE_CLUSTER
+	uint id = Get1DCluster(clipPos.xy / _ScreenParams.xy, clipPos.w);
+	int count = _ClusterCountBuffer[id];
+	LightArray array = _ClusterArrayBuffer[id];
+
+	for (int j = 0; j < count; j++) {
+		Light light = GetOtherLight(array.lightIndex[j], surface, shadowData);
+		color += DirectBSDF(surface, light, normalDistorion, power, width, scale);
+	}
+
+#else
+	for (int j = 0; j < GetOtherLightCount(); j++) {
+		Light light = GetOtherLight(j, surface, shadowData);
+		color += DirectBSDF(surface, light, normalDistorion, power, width, scale);
+	}
+#endif
+	return color;
+}
+
+
 
 //因为是视线方向作为法线的，因此要注意相反的情况，但是相反应该要也可以看见
 float3 BulkIncomingLight(Light light, float3 viewDirection, float g){

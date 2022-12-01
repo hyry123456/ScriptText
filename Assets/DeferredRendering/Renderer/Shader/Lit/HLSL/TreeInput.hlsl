@@ -6,9 +6,27 @@ UNITY_INSTANCING_BUFFER_START(UnityPerTree)
 	UNITY_DEFINE_INSTANCED_PROP(float4, _TranslucencyColor)
 	UNITY_DEFINE_INSTANCED_PROP(float, _TranslucencyViewDependency)
 	UNITY_DEFINE_INSTANCED_PROP(float, _ShadowStrength)
+	UNITY_DEFINE_INSTANCED_PROP(float, _TransferPower)
+	UNITY_DEFINE_INSTANCED_PROP(float, _TransferScale)
 // float4 _Wind;    //Unity的树提供的数据
     UNITY_DEFINE_INSTANCED_PROP(float4, _Wind)
 
 UNITY_INSTANCING_BUFFER_END(UnityPerTree)
+
+#define INPUT_PROP(name) UNITY_ACCESS_INSTANCED_PROP(UnityPerTree, name)
+
+
+float GetTranslucencyViewDependency(){
+	return INPUT_PROP(_TranslucencyViewDependency);
+}
+
+float GetTranslucencyPower(){
+	return INPUT_PROP(_TransferPower);
+}
+
+float GetTranslucencyScale(){
+	return INPUT_PROP(_TransferScale);
+}
+
 
 #endif

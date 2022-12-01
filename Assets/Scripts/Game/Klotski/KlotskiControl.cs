@@ -176,8 +176,8 @@ public class KlotskiControl : MonoBehaviour
 
     public int PositionToIndex(Vector2 localPos)
     {
-        int row = (int)(-localPos.y / gridSize.y);
-        int col = (int)(localPos.x / gridSize.x);
+        int row = Mathf.RoundToInt(-localPos.y / gridSize.y);
+        int col = Mathf.RoundToInt(localPos.x / gridSize.x);
         row += gridCount / 2;
         col += gridCount / 2;
         return row * gridCount + col;
@@ -206,19 +206,7 @@ public class KlotskiControl : MonoBehaviour
     private bool Check()
     {
         int current = 0;
-        for (int i = 1; i < GridCount; i++)
-        {
-            if (klotskiItems[0][i] == null)
-            {
-                current++;
-                continue;
-            }
-            if (klotskiItems[0][i].Value == current + 1)
-                current++;
-            else
-                return false;
-        }
-        for (int i = 1; i < GridCount; i++)
+        for (int i = 0; i < GridCount; i++)
         {
             for(int j = 0; j < GridCount; j++)
             {
@@ -227,7 +215,7 @@ public class KlotskiControl : MonoBehaviour
                     current++;
                     continue;
                 }
-                if (klotskiItems[i][j].Value == current + 1)
+                if (klotskiItems[i][j].Value == current)
                     current++;
                 else
                     return false;

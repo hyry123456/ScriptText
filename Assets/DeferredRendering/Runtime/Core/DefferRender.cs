@@ -16,6 +16,7 @@ namespace DefferedRender
 
         static ShaderTagId
             litShaderTagId = new ShaderTagId("FowardShader"),       //透明物体，使用前向渲染
+            lit2ShaderTagId = new ShaderTagId("FowardAdd"),       //透明物体，使用前向渲染
             gBufferShaderTagId = new ShaderTagId("OutGBuffer");     //输出GBuffer
 
         //存储GBuffer的一般贴图的数组
@@ -376,6 +377,7 @@ namespace DefferedRender
             drawingSettings.sortingSettings = sortingSettings;
             filteringSettings.renderQueueRange = RenderQueueRange.transparent;
             drawingSettings.SetShaderPassName(0, litShaderTagId);
+            drawingSettings.SetShaderPassName(1, lit2ShaderTagId);
 
             ExecuteBuffer();
 
